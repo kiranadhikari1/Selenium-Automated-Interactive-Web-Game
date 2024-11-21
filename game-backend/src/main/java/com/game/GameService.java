@@ -1,7 +1,7 @@
 package com.game;
 import java.util.*;
 
-public class Main {
+public class GameService {
 
     private Deck deck;
     private List<Player> players;
@@ -10,8 +10,11 @@ public class Main {
     private List<String> totalStagedCards;
     private List<Player> eligibleParticipants;
     private Map<Player, List<String>> eligiblePlayersAttackCards;
+    private String currentPlayerInput;
+    private boolean waitingForPlayerInput = false;
+    private Queue<String> messageQueue;
 
-    public Main(){
+    public GameService(){
         this.deck = new Deck();
         this.players = new ArrayList<>();
         this.scanner = new Scanner(System.in);
@@ -19,11 +22,14 @@ public class Main {
         this.totalStagedCards = new ArrayList<>();
         this.eligibleParticipants = new ArrayList<>();
         this.eligiblePlayersAttackCards = new HashMap<>();
+        this.currentPlayerInput = "";
+        this.waitingForPlayerInput = false;
+        this.messageQueue = new LinkedList<>();
     }
 
     // This is where the main game loop is played out and for testing.
     public static void main(String[] args) {
-        Main game = new Main();
+        GameService game = new GameService();
         game.initPlayers();
         game.initDecks();
         game.shuffleDecks();
@@ -34,11 +40,15 @@ public class Main {
 
     // This is the main game loop function that is responsible for handing the events of the game.
     public void playGame() {
+        System.out.println("playGame method is running!");
+        logMessage("Game has started!");
         while (checkForWinners().isEmpty()) {
             for (Player player : players) {
-                System.out.println(player.getPlayerID() + "'s turn.");
+                System.out.println("Processing turn for: " + player.getPlayerID()); // Debugging
+                logMessage(player.getPlayerID() + "'s turn.");
                 String drawnEventCard = deck.drawEventCard();
-                System.out.println("Event Card Drawn: " + drawnEventCard);
+//                System.out.println("Event Card Drawn: " + drawnEventCard);
+                logMessage("Event Card Drawn: " + drawnEventCard);
                 if (drawnEventCard.equals("Plague")) {
                     plagueCardDrawn(player);
                 } else if (drawnEventCard.equals("Queen’s favor")) {
@@ -151,7 +161,8 @@ public class Main {
     }
 
     public void displayPlayerHand(Player player){
-        System.out.printf("\n" + player.getPlayerID() + ": ");
+//        System.out.printf("\n" + player.getPlayerID() + ": ");
+        logMessage("\n" + player.getPlayerID() + ": ");
         sortHand(player);
     }
 
@@ -201,6 +212,7 @@ public class Main {
         // Print hand after sorted
         for (String card : player.getHand()) {
             System.out.printf("%-15s", card);
+            logMessage(card);
         }
     }
 
@@ -221,7 +233,8 @@ public class Main {
     public void promptPositionForCardRemoval(Player player, int discardCount){
         displayPlayerHand(player);
         for (int i=0; i<discardCount; i++){
-            System.out.print("\nEnter position of the next card to delete: ");
+//            System.out.print("\nEnter position of the next card to delete: ");
+            logMessage("\nEnter position of the next card to delete: ");
             String position = scanner.nextLine();
             deleteCardFromHand(player, Integer.parseInt(position));
         }
@@ -263,27 +276,34 @@ public class Main {
     }
 
     public void endTurnAndClearDisplay(Player currentPlayer){
-        System.out.println("\n" + currentPlayer.getPlayerID() + "'s turn has ended, please press the <return> key to end your turn.\n");
+//        System.out.println("\n" + currentPlayer.getPlayerID() + "'s turn has ended, please press the <return> key to end your turn.\n");
+        logMessage("\n" + currentPlayer.getPlayerID() + "'s turn has ended, please press the <return> key to end your turn.\n");
         scanner.nextLine();
-        System.out.println("Clearing display for the next player's turn...");
-        System.out.println("\n\n\n\n\n\n\n\n\n\n");
+//        System.out.println("Clearing display for the next player's turn...");
+        logMessage("Clearing display for the next player's turn...");
+//        System.out.println("\n\n\n\n\n\n\n\n\n\n");
+        logMessage("\n\n\n\n\n\n\n\n\n\n");
     }
 
     public void displayNextPlayerTurn(Player player){
-        System.out.println("It is now " + player.getPlayerID() + "'s turn.");
+//        System.out.println("It is now " + player.getPlayerID() + "'s turn.");
+        logMessage("It is now " + player.getPlayerID() + "'s turn.");
         displayPlayerHand(player);
     }
 
     public Player promptPlayersForQuestSponsor(Player currentPlayer){
-        System.out.println(currentPlayer.getPlayerID() + ", would you like to sponsor this quest? (y/n)\n");
+//        System.out.println(currentPlayer.getPlayerID() + ", would you like to sponsor this quest? (y/n)\n");
+        logMessage(currentPlayer.getPlayerID() + ", would you like to sponsor this quest? (y/n)\n");
         String playerResponse = scanner.nextLine();
 
         if (playerResponse.equals("y")){
-            System.out.println(currentPlayer.getPlayerID() + " is sponsoring this quest!\n");
+//            System.out.println(currentPlayer.getPlayerID() + " is sponsoring this quest!\n");
+            logMessage(currentPlayer.getPlayerID() + " is sponsoring this quest YAAAA!\n");
             return currentPlayer;
         }
         else{
-            System.out.println(currentPlayer.getPlayerID() + " has declined to sponsor this quest.\n");
+//            System.out.println(currentPlayer.getPlayerID() + " has declined to sponsor this quest.\n");
+            logMessage(currentPlayer.getPlayerID() + " has declined to sponsor this quest.\n");
         }
         int currentPlayerPosition = players.indexOf(currentPlayer); // grab curr players position
 
@@ -303,6 +323,7 @@ public class Main {
             }
         }
         System.out.println("No sponsors found, quest has ended!\n");
+        logMessage("No sponsors found, quest has ended!\n");
         return null;
     }
 
@@ -313,7 +334,8 @@ public class Main {
 
     public String promptSponsorForCardToInclude(Player sponsor){
         displayPlayerHand(sponsor);
-        System.out.println("\nPlease enter the position of the next card to include in this stage or typw 'Quit' to end building this stage.\n");
+//        System.out.println("\nPlease enter the position of the next card to include in this stage or typw 'Quit' to end building this stage.\n");
+        logMessage("\nPlease enter the position of the next card to include in this stage or typw 'Quit' to end building this stage.\n");
         return scanner.nextLine();
     }
 
@@ -343,7 +365,8 @@ public class Main {
         if (selectedCard.startsWith("F")){
             for (String card : currentStageCards){
                 if (card.startsWith("F")){
-                    System.out.println("\nMust select a sole foe card!\n");
+//                    System.out.println("\nMust select a sole foe card!\n");
+                    logMessage("\nMust select a sole foe card!\n");
                     return false;
                 }
             }
@@ -365,15 +388,18 @@ public class Main {
         if (cardPosition.equals("Quit")){
             if (!isNonEmptyStage(currentStageCards)){
                 System.out.println("\nThis stage cannot be empty!\n");
+                logMessage("\nThis stage cannot be empty!\n");
                 return false;
             }
 
             if (!isLargerStageValue(previousStageCards, currentStageCards)){
-                System.out.println("\nThis stage value needs to be greater than the previous stage.\n");
+//                System.out.println("\nThis stage value needs to be greater than the previous stage.\n");
+                logMessage("\nThis stage value needs to be greater than the previous stage.\n");
                 return false;
             }
 
-            System.out.println("\nStage is valid and has been created.\n");
+//            System.out.println("\nStage is valid and has been created.\n");
+            logMessage("\nStage is valid and has been created.\n");
             return true;
         }
         return false;
@@ -405,7 +431,8 @@ public class Main {
                 isValid = true;
             }
             else{
-                System.out.println("\nInvalid card, please select a valid one for this stage.\n");
+//                System.out.println("\nInvalid card, please select a valid one for this stage.\n");
+                logMessage("\nInvalid card, please select a valid one for this stage.\n");
             }
         }
         return validCardPosition;
@@ -415,7 +442,8 @@ public class Main {
     // This method displays the players hand and prompts the player for the position of the next attack card to use for the current stage or quit.
     public String promptPlayerForAttackCard(Player player){
         displayPlayerHand(player);
-        System.out.println("\nPlease enter the position of the next card to include in this attack or 'Quit' to end building this attack.\n");
+//        System.out.println("\nPlease enter the position of the next card to include in this attack or 'Quit' to end building this attack.\n");
+        logMessage("\nPlease enter the position of the next card to include in this attack or 'Quit' to end building this attack.\n");
         return scanner.nextLine();
     }
 
@@ -431,7 +459,8 @@ public class Main {
             return true;
         }
         if (selectedCard.startsWith("F")){
-            System.out.println("\nCannot add a foe card. Please select a valid weapon card!\n");
+//            System.out.println("\nCannot add a foe card. Please select a valid weapon card!\n");
+            logMessage("\nCannot add a foe card. Please select a valid weapon card!\n");
             return false;
         }
         return false;
@@ -456,11 +485,13 @@ public class Main {
     public boolean handleQuitEnteredForAttack(String cardPosition, List<String> currentAttackCards){
         if (cardPosition.equals("Quit")){
             if (isEmptyAttack(currentAttackCards)){
-                System.out.println("\nAttack is empty but valid!\n");
+//                System.out.println("\nAttack is empty but valid!\n");
+                logMessage("\nAttack is empty but valid!\n");
                 return true;
             }
 
-            System.out.println("\nAdded selected card to list of cards for attack.\n");
+//            System.out.println("\nAdded selected card to list of cards for attack.\n");
+            logMessage("\nAdded selected card to list of cards for attack.\n");
             return isValidAttackCard(cardPosition, currentAttackCards);
         }
         return false;
@@ -488,7 +519,8 @@ public class Main {
                 isValid = true;
             }
             else{
-                System.out.println("\nInvalid card, please select a valid one for this stage.\n");
+//                System.out.println("\nInvalid card, please select a valid one for this stage.\n");
+                logMessage("\nInvalid card, please select a valid one for this stage.\n");
             }
         }
         return validCardPosition;
@@ -503,7 +535,8 @@ public class Main {
                 eligibleParticipants.add(player);
             }
         }
-        System.out.print("Eligible Players: ");
+//        System.out.print("Eligible Players: ");
+        logMessage("Eligible Players: ");
         for (Player player : eligibleParticipants){
             System.out.print(player.getPlayerID() + " ");
         }
@@ -594,7 +627,8 @@ public class Main {
                 player.getHand().remove(card);
                 deck.getAdventureDeckDiscardPile().add(card);
             }
-            System.out.println("\nThe cards used for this attack have been discarded.\n");
+//            System.out.println("\nThe cards used for this attack have been discarded.\n");
+            logMessage("\nThe cards used for this attack have been discarded.\n");
         }
     }
 
@@ -615,7 +649,8 @@ public class Main {
             sponsor.getHand().remove(card);
             deck.getAdventureDeckDiscardPile().add(card);
         }
-        System.out.println("\nAll cards that were used to build this quest have been discarded.\n");
+//        System.out.println("\nAll cards that were used to build this quest have been discarded.\n");
+        logMessage("\nAll cards that were used to build this quest have been discarded.\n");
         int totalCardsToDraw = this.totalStagedCards.size() + totalStages;
         refreshSponsorHand(sponsor, totalCardsToDraw);
         this.allQuestCards.clear();
@@ -637,7 +672,8 @@ public class Main {
             int cardPosition = handleRepromptAndReturnValidAttackCardForCurrentAttack(player, currentAttackCards);
 
             if (cardPosition == -1) { // quit entered
-                System.out.println("\nAttack for this stage has been set up.\n");
+//                System.out.println("\nAttack for this stage has been set up.\n");
+                logMessage("\nAttack for this stage has been set up.\n");
                 break;
             } else {
                 String selectedCard = player.getHand().get(cardPosition);
@@ -662,7 +698,8 @@ public class Main {
         List<String> previousStageCards = new ArrayList<>();
 
         for (int i = 1; i <= totalStages; i++) {
-            System.out.println("\nSetting up Stage " + i + " of " + totalStages);
+//            System.out.println("\nSetting up Stage " + i + " of " + totalStages);
+            logMessage("\nSetting up Stage " + i + " of " + totalStages);
             List<String> currentStageCards = new ArrayList<>();
 
             while (true) {
@@ -670,7 +707,8 @@ public class Main {
                 if (cardPosition == -1) { // catch 'Quit' entered which is return of -1 during any of the setup stages
                     this.allQuestCards.add(new ArrayList<>(currentStageCards));
                     previousStageCards = new ArrayList<>(currentStageCards); // assign to a copy of curr stage cards to keep track of prev cards once we get to next stage
-                    System.out.println("Stage " + i + " is ready.\n");
+//                    System.out.println("Stage " + i + " is ready.\n");
+                    logMessage("Stage " + i + " is ready.\n");
                     break; // continue to next stage
                 }
                 else{
@@ -682,7 +720,8 @@ public class Main {
                 }
             }
         }
-        System.out.println("\nQuest has been set up and is ready to be played out.\n");
+//        System.out.println("\nQuest has been set up and is ready to be played out.\n");
+        logMessage("\nQuest has been set up and is ready to be played out.\n");
 
         // Store the quest cards per stage for quest resolution
         for (List<String> stage : this.allQuestCards) {
@@ -706,7 +745,8 @@ public class Main {
 
             // Check if any players are left
             if (noParticipantsLeft(eligibleParticipants)) {
-                System.out.println("No more eligible participants.");
+//                System.out.println("No more eligible participants.");
+                logMessage("No more eligible participants.");
                 endQuest(qCard, sponsor); // end quest, discard event card and end player turn
                 discardSponsorStagedCards(sponsor, totalStages);
                 return;
@@ -731,7 +771,8 @@ public class Main {
 
             // Check again after resolveeAttack if any players are still left
             if (noParticipantsLeft(eligibleParticipants)) {
-                System.out.println("No more eligible participants.");
+//                System.out.println("No more eligible participants.");
+                logMessage("No more eligible participants.");
                 endQuest(qCard, sponsor); // end quest, discard event card and end player turn
                 discardSponsorStagedCards(sponsor, totalStages);
                 return;
@@ -766,5 +807,40 @@ public class Main {
         }
         eligibleParticipants.removeIf(player -> !player.getStageEligibility());
     }
+
+    public String testMethod() {
+        return "testing beep beep...";
+    }
+
+    public void submitPlayerInput(String input) {
+    }
+
+    public String getCurrentInput() {
+        if (!waitingForPlayerInput) {
+            return "No input required";
+        }
+        return currentPlayerInput;
+    }
+
+    public boolean isWaitingForInput() {
+        return waitingForPlayerInput;
+    }
+
+    public List<String> getMessageLogs() {
+        synchronized (messageQueue) {
+            List<String> logs = new ArrayList<>(messageQueue);
+            messageQueue.clear();
+            System.out.println("Returning logs to frontend: " + logs); // for test local debug- delete later!
+            return logs;
+        }
+    }
+
+    private void logMessage(String message) {
+        System.out.println("Adding to queue: " + message); // Debugging
+        synchronized (messageQueue) {
+            messageQueue.add(message);
+        }
+    }
+
 
 }

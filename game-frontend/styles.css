@@ -1,0 +1,41 @@
+#game-messages {
+    margin: 20px auto;
+    padding: 10px;
+    width: 80%;
+    height: 300px;
+    background-color: #222;
+    color: #fff;
+    overflow-y: auto;
+    border-radius: 5px;
+    border: 1px solid #000;
+    font-family: monospace;
+    text-align: left;
+}
+
+#start-game {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#start-game:hover {
+    background-color: #218838;
+}
+
+#player-input {
+    margin: 20px auto;
+    text-align: center;
+}
+
+#player-input-box {
+    padding: 10px;
+    font-size: 1em;
+    width: 50%;
+    margin-right: 10px;
+}
