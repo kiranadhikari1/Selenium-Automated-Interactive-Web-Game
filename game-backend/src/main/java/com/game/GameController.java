@@ -13,11 +13,6 @@ public class GameController {
         this.gameService = new GameService();
     }
 
-    @GetMapping("/test")
-    public String testService() {
-        return gameService.testMethod();
-    }
-
     @PostMapping("/start")
     public void gameStart(){
         gameService.initPlayers();
@@ -25,30 +20,27 @@ public class GameController {
         gameService.shuffleDecks();
         gameService.distributeCardsToPlayer();
 
+//        gameService.getDeck().getEventDeck().add("Q2");
+
         System.out.println("Game start test"); // remove later
         new Thread(() -> {
             System.out.println("Game thread created test"); // remove later
             gameService.playGame();
         }).start();
     }
-//
-//    @GetMapping("/playerPrompt")
-//    public String getInput(){
-//        if (gameService.isWaitingForInput()){
-//            return gameService.getCurrentInput();
-//        }
-//        return "proceed";
-//    }
-//
-//    @PostMapping("/input")
-//    public String returnPlayerInput(String input){
-//        gameService.submitPlayerInput(input);
-//        return "input submitted";
-//    }
 
-    @GetMapping("/messageLogs")
-    public List<String> getLogs(){
-        return gameService.getMessageLogs();
+    @PostMapping("/input")
+    public String returnPlayerInput(@RequestParam String input){
+        if (input.isBlank()) {
+            input = "\n";
+        }
+        gameService.submitPlayerInput(input);
+        return "input submitted";
+    }
+
+    @GetMapping("/message")
+    public String getNextMessage() {
+        return gameService.waitForNewMessage();
     }
 }
 
