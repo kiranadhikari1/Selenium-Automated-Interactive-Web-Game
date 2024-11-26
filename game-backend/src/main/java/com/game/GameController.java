@@ -7,7 +7,7 @@ import java.util.List;
 @RequestMapping("/game")
 public class GameController {
 
-    private final GameService gameService;
+    private GameService gameService;
 
     public GameController() {
         this.gameService = new GameService();
@@ -57,6 +57,28 @@ public class GameController {
             System.out.println("First scenario initialized. Starting hands and deck have been rigged. Q2 at top"); // remove later
             gameService.playGame();
         }).start();
+    }
+
+    @PostMapping("initSecondScenario")
+    public void rigDeckForScenario2(){
+        gameService.initPlayers();
+        gameService.initDecks();
+        gameService.shuffleDecks();
+        gameService.distributeCardsToPlayer();
+
+        gameService.initializeSecondScenario();
+
+        new Thread(() -> {
+            System.out.println("Second scenario initialized. Starting hands and deck have been rigged."); // remove later
+            gameService.playGame();
+        }).start();
+    }
+
+    @PostMapping("/reset")
+    public void resetGame() throws InterruptedException {
+        gameService.stopGame();
+//        Thread.sleep(1000);
+        gameService = new GameService();
     }
 }
 

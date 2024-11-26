@@ -82,10 +82,21 @@ document.getElementById('pos-11').addEventListener('click', async () => {
     await fetch('http://127.0.0.1:8080/game/input?input=11', { method: 'POST' });
 });
 
-// Buttons for rigging deck + starting hand of given scenarios
+// Buttons for rigging deck + starting hand | Scenario # 1
 document.getElementById('rig-1').addEventListener('click', async () => {
     await fetch('http://127.0.0.1:8080/game/initFirstScenario', { method: 'POST' });
     fetchMessage();
+});
+
+// Buttons for rigging deck + starting hand | Scenario # 2
+document.getElementById('rig-2').addEventListener('click', async () => {
+    await fetch('http://127.0.0.1:8080/game/initSecondScenario', { method: 'POST' });
+    fetchMessage();
+});
+
+// Reset the game
+document.getElementById('reset-button').addEventListener('click', async () => {
+    await fetch('http://127.0.0.1:8080/game/reset', { method: 'POST' });
 });
 
 async function fetchMessage() {

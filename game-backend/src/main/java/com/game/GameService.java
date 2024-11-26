@@ -13,6 +13,7 @@ public class GameService {
     private String currentPlayerInput;
     private boolean waitingForPlayerInput = false;
     private Queue<String> messageQueue;
+    private boolean gameIsRunning = true;
 
     public GameService(){
         this.deck = new Deck();
@@ -40,10 +41,12 @@ public class GameService {
 
     // This is the main game loop function that is responsible for handing the events of the game.
     public void playGame() {
+        gameIsRunning = true;
         System.out.println("playGame method is running!");
         logMessage("Game has started!");
-        while (checkForWinners().isEmpty()) {
+        while (checkForWinners().isEmpty() && gameIsRunning) {
             for (Player player : players) {
+                if (!gameIsRunning) break;
                 System.out.println("Processing turn for: " + player.getPlayerID()); // Debugging
                 logMessage(player.getPlayerID() + "'s turn.");
                 String drawnEventCard = deck.drawEventCard();
@@ -943,5 +946,108 @@ public class GameService {
         deck.getAdventureDeck().add(0, "B15");
         deck.getAdventureDeck().add(0, "S10");
         deck.getAdventureDeck().add(0, "F30");
+    }
+
+    public void initializeSecondScenario() {
+        Player p1 = getPlayers().get(0);
+        Player p2 = getPlayers().get(1);
+        Player p3 = getPlayers().get(2);
+        Player p4 = getPlayers().get(3);
+
+        p1.getHand().clear();
+        p2.getHand().clear();
+        p3.getHand().clear();
+        p4.getHand().clear();
+
+        p1.addCardToHand("F5");
+        p1.addCardToHand("F5");
+        p1.addCardToHand("F5");
+        p1.addCardToHand("F10");
+        p1.addCardToHand("F10");
+        p1.addCardToHand("F15");
+        p1.addCardToHand("F15");
+        p1.addCardToHand("F20");
+        p1.addCardToHand("F25");
+        p1.addCardToHand("D5");
+        p1.addCardToHand("H10");
+        p1.addCardToHand("B15");
+
+        p2.addCardToHand("F5");
+        p2.addCardToHand("F5");
+        p2.addCardToHand("F5");
+        p2.addCardToHand("F15");
+        p2.addCardToHand("D5");
+        p2.addCardToHand("D5");
+        p2.addCardToHand("H10");
+        p2.addCardToHand("B15");
+        p2.addCardToHand("L20");
+        p2.addCardToHand("L20");
+        p2.addCardToHand("L20");
+        p2.addCardToHand("E30");
+
+        p3.addCardToHand("F5");
+        p3.addCardToHand("F5");
+        p3.addCardToHand("F10");
+        p3.addCardToHand("F10");
+        p3.addCardToHand("F10");
+        p3.addCardToHand("F10");
+        p3.addCardToHand("F10");
+        p3.addCardToHand("F15");
+        p3.addCardToHand("F15");
+        p3.addCardToHand("F15");
+        p3.addCardToHand("F50");
+        p3.addCardToHand("D5");
+
+        p4.addCardToHand("F20");
+        p4.addCardToHand("F20");
+        p4.addCardToHand("F20");
+        p4.addCardToHand("F30");
+        p4.addCardToHand("D5");
+        p4.addCardToHand("S10");
+        p4.addCardToHand("S10");
+        p4.addCardToHand("H10");
+        p4.addCardToHand("H10");
+        p4.addCardToHand("B15");
+        p4.addCardToHand("L20");
+        p4.addCardToHand("L20");
+
+        deck.getEventDeck().remove("Q3");
+        deck.getEventDeck().add(0, "Q3");
+        deck.getEventDeck().remove("Q4");
+        deck.getEventDeck().add(0, "Q4");
+
+        // Rig the deck after initializing.
+        deck.getAdventureDeck().add(0, "F25");// random for quest 2 stage 3
+        deck.getAdventureDeck().add(0, "D5");// random for quest 2 stage 3
+        deck.getAdventureDeck().add(0, "H10");// random for quest 2 stage 2
+        deck.getAdventureDeck().add(0, "L20");// random for quest 2 stage 2
+        deck.getAdventureDeck().add(0, "B15");// random for quest 2 stage 1
+        deck.getAdventureDeck().add(0, "F15");// random for quest 2 stage 1
+
+        deck.getAdventureDeck().add(0, "F35"); // Sponsor drawn card after quest 1
+        deck.getAdventureDeck().add(0, "F25"); // Sponsor drawn card after quest 1
+        deck.getAdventureDeck().add(0, "D5"); // Sponsor drawn card after quest 1
+        deck.getAdventureDeck().add(0, "H10"); // Sponsor drawn card after quest 1
+        deck.getAdventureDeck().add(0, "B15"); // Sponsor drawn card after quest 1
+        deck.getAdventureDeck().add(0, "F25"); // Sponsor drawn card after quest 1
+        deck.getAdventureDeck().add(0, "F20"); // Sponsor drawn card after quest 1
+        deck.getAdventureDeck().add(0, "F15"); // Sponsor drawn card after quest 1
+        deck.getAdventureDeck().add(0, "F5"); // Sponsor drawn card after quest 1
+        deck.getAdventureDeck().add(0, "D5"); // Sponsor drawn card after quest 1
+        deck.getAdventureDeck().add(0, "D5"); // Sponsor drawn card after quest 1
+
+        deck.getAdventureDeck().add(0, "S10");
+        deck.getAdventureDeck().add(0, "D5");
+        deck.getAdventureDeck().add(0, "L20");
+        deck.getAdventureDeck().add(0, "B15");
+        deck.getAdventureDeck().add(0, "B15");
+        deck.getAdventureDeck().add(0, "B15");
+        deck.getAdventureDeck().add(0, "H10");
+        deck.getAdventureDeck().add(0, "D5");
+        deck.getAdventureDeck().add(0, "S10");
+    }
+
+    public void stopGame() {
+        gameIsRunning = false;
     }
 }
