@@ -82,6 +82,11 @@ document.getElementById('pos-11').addEventListener('click', async () => {
     await fetch('http://127.0.0.1:8080/game/input?input=11', { method: 'POST' });
 });
 
+// Buttons for rigging deck + starting hand of given scenarios
+document.getElementById('rig-1').addEventListener('click', async () => {
+    await fetch('http://127.0.0.1:8080/game/initFirstScenario', { method: 'POST' });
+    fetchMessage();
+});
 
 async function fetchMessage() {
     try {

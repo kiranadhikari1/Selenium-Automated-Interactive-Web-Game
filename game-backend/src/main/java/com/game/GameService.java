@@ -864,4 +864,84 @@ public class GameService {
         return input;
     }
 
+    // This method riggs the starting deck + hand for the given scenario
+    public void initializeFirstScenario() {
+        Player p1 = getPlayers().get(0);
+        Player p2 = getPlayers().get(1);
+        Player p3 = getPlayers().get(2);
+        Player p4 = getPlayers().get(3);
+
+        p1.getHand().clear();
+        p2.getHand().clear();
+        p3.getHand().clear();
+        p4.getHand().clear();
+
+        // Rig each players hand
+        p1.addCardToHand("F5");
+        p1.addCardToHand("F5");
+        p1.addCardToHand("F15");
+        p1.addCardToHand("F15");
+        p1.addCardToHand("D5");
+        p1.addCardToHand("S10");
+        p1.addCardToHand("S10");
+        p1.addCardToHand("H10");
+        p1.addCardToHand("H10");
+        p1.addCardToHand("B15");
+        p1.addCardToHand("B15");
+        p1.addCardToHand("L20");
+
+        p2.addCardToHand("F5");
+        p2.addCardToHand("F5");
+        p2.addCardToHand("F15");
+        p2.addCardToHand("F15");
+        p2.addCardToHand("F40");
+        p2.addCardToHand("D5");
+        p2.addCardToHand("S10");
+        p2.addCardToHand("H10");
+        p2.addCardToHand("H10");
+        p2.addCardToHand("B15");
+        p2.addCardToHand("B15");
+        p2.addCardToHand("E30");
+
+        p3.addCardToHand("F5");
+        p3.addCardToHand("F5");
+        p3.addCardToHand("F5");
+        p3.addCardToHand("F15");
+        p3.addCardToHand("D5");
+        p3.addCardToHand("S10");
+        p3.addCardToHand("S10");
+        p3.addCardToHand("S10");
+        p3.addCardToHand("H10");
+        p3.addCardToHand("H10");
+        p3.addCardToHand("B15");
+        p3.addCardToHand("L20");
+
+        p4.addCardToHand("F5");
+        p4.addCardToHand("F15");
+        p4.addCardToHand("F15");
+        p4.addCardToHand("F40");
+        p4.addCardToHand("D5");
+        p4.addCardToHand("D5");
+        p4.addCardToHand("S10");
+        p4.addCardToHand("H10");
+        p4.addCardToHand("H10");
+        p4.addCardToHand("B15");
+        p4.addCardToHand("L20");
+        p4.addCardToHand("E30");
+
+        deck.getEventDeck().remove("Q4");
+        deck.getEventDeck().add(0, "Q4");
+
+        // Rig the deck after initializing.
+        deck.getAdventureDeck().add(0, "L20");
+        deck.getAdventureDeck().add(0, "F30");
+        deck.getAdventureDeck().add(0, "S10");
+        deck.getAdventureDeck().add(0, "B15");
+        deck.getAdventureDeck().add(0, "L20");
+        deck.getAdventureDeck().add(0, "L20");
+        deck.getAdventureDeck().add(0, "F10");
+        deck.getAdventureDeck().add(0, "B15");
+        deck.getAdventureDeck().add(0, "S10");
+        deck.getAdventureDeck().add(0, "F30");
+    }
 }

@@ -3,7 +3,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://127.0.0.1:8081")
+@CrossOrigin(origins = {"http://127.0.0.1:8081", "http://127.0.0.1:8082", "http://127.0.0.1:8083"})
 @RequestMapping("/game")
 public class GameController {
 
@@ -41,6 +41,22 @@ public class GameController {
     @GetMapping("/message")
     public String getNextMessage() {
         return gameService.waitForNewMessage();
+    }
+
+    @PostMapping("initFirstScenario")
+    public void rigDeckForScenario1(){
+        gameService.initPlayers();
+        gameService.initDecks();
+        gameService.shuffleDecks();
+        gameService.distributeCardsToPlayer();
+
+        gameService.initializeFirstScenario();
+
+        System.out.println("Game start test"); // remove later
+        new Thread(() -> {
+            System.out.println("First scenario initialized. Starting hands and deck have been rigged. Q2 at top"); // remove later
+            gameService.playGame();
+        }).start();
     }
 }
 
