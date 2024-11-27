@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class AppTest{
 
@@ -175,38 +176,9 @@ public class AppTest{
         cardPos0.click();
         Thread.sleep(1000);
         cardPos0.click();
-        Thread.sleep(1000);
-        cardPos0.click();
-        Thread.sleep(1000);
 
-        Thread.sleep(20000); // wait 20s to review game
+        Thread.sleep(10000); // wait 20s to review game
         webDriver.quit();
     }
 
-//    @Test
-//    void playGameTest(){
-//        WebDriver webDriver = new ChromeDriver();
-//        webDriver.get("http://127.0.0.1:8083");
-//
-//        WebElement startButton = webDriver.findElement(By.id("start-game"));
-//        startButton.click();
-//
-//        WebElement yesButton = webDriver.findElement(By.id("y-button"));
-//        yesButton.click();
-//        webDriver.quit();
-//
-//    }
-//
-//    @Test
-//    void noSponsorTest(){
-//        WebDriver webDriver = new ChromeDriver();
-//        webDriver.get("http://127.0.0.1:8083");
-//
-//        WebElement startButton = webDriver.findElement(By.id("start-game"));
-//        startButton.click();
-//
-//        WebElement noButton = webDriver.findElement(By.id("n-button"));
-//        noButton.click();
-//        webDriver.quit();
-//    }
 }

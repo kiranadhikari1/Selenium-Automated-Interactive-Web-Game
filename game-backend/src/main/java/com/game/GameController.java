@@ -80,5 +80,14 @@ public class GameController {
 //        Thread.sleep(1000);
         gameService = new GameService();
     }
+
+    @GetMapping("/playerStats")
+    public String getPlayerStats(){
+        StringBuilder stats = new StringBuilder("Player|Shields|Cards\n");
+        for (Player p: gameService.getPlayers()){
+            stats.append(p.getPlayerID()).append("|").append(p.getShieldCount()).append("|").append(p.handSize()).append("\n");
+        }
+        return stats.toString().trim();
+    }
 }
 

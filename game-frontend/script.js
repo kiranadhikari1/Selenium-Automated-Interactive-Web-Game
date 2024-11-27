@@ -108,10 +108,29 @@ async function fetchMessage() {
         }
         const message = await response.text();
         updateGameMessages(message);
+
+        fetchPlayerStats()
+
         fetchMessage();
 
     } catch (error) {
         console.error("error: ", error);
+    }
+}
+
+async function fetchPlayerStats() {
+    try {
+        const response = await fetch('http://127.0.0.1:8080/game/playerStats');
+        if (!response.ok) {
+            console.error("failed fetching p stats ", response.statusText);
+            return;
+        }
+
+        const stats = await response.text();
+        updateShieldsAndCards(stats);
+
+    } catch (error) {
+        console.error("error getting stats | cards or hand-count ", error);
     }
 }
 
@@ -123,4 +142,13 @@ function updateGameMessages(message) {
     newMessage.textContent = message;
     totalMessages.appendChild(newMessage);
     totalMessages.scrollTop = totalMessages.scrollHeight;
+}
+
+function updateShieldsAndCards(message){
+    const lines = message.split("\n");
+    lines.slice(1).forEach(line => {
+        const [player, shieldCount, cardCount] = line.split("|").map(s => s.trim());
+        const newStats = document.getElementById(`${player.toLowerCase()}-shieldCount`);
+        newStats.textContent = `${player}: ${shieldCount} | ${cardCount}`;
+    });
 }
