@@ -643,9 +643,14 @@ public class GameService {
         }
     }
 
+    // P1 Starts: F5 F5 F10 F10 F15 D5 H10 H10 B15 B15 L20     After quest 1 ends: P1:F5 F10 F15 F15 F15 F15 F20 F20 F20 F20 F25 F25 F30 L20
+
     // UC-04-5
     // This method draws new cards for sponsor and trims hand after the quest has finished.
     public void refreshSponsorHand(Player sponsor, int totalCardsToDraw){
+        System.out.println("SPONSOR HAND B4 REFRESH:: ");
+        displayPlayerHand(sponsor);
+        System.out.println("SPONSOR HAND B4 REFRESH ABOVE!~!!!!!!");
         for (int i=0; i<totalCardsToDraw; i++){
             sponsor.addCardToHand(deck.drawAdventureCard());
         }
@@ -656,11 +661,15 @@ public class GameService {
     // This method discards the cards used by the sponsor during a quest.
     public void discardSponsorStagedCards(Player sponsor, int totalStages){
         List<String> stagedCardsCopy = new ArrayList<>(this.totalStagedCards);
-        for (String card : stagedCardsCopy) {
-            sponsor.getHand().remove(card);
-            deck.getAdventureDeckDiscardPile().add(card);
-        }
-//        System.out.println("\nAll cards that were used to build this quest have been discarded.\n");
+        System.out.println("sponsor hand before discardSponsorStagedCards removes stagedCardsCopy\n");
+        displayPlayerHand(sponsor);
+//        for (String card : stagedCardsCopy) {
+//            sponsor.getHand().remove(card);
+//            System.out.println("Removing card: " + card + " from " + sponsor.getPlayerID());
+//
+//            deck.getAdventureDeckDiscardPile().add(card);
+//        }
+        System.out.println("\nAll cards that were used to build this quest have been discarded.\n");
         logMessage("\nAll cards that were used to build this quest have been discarded.\n");
         int totalCardsToDraw = this.totalStagedCards.size() + totalStages;
         refreshSponsorHand(sponsor, totalCardsToDraw);
@@ -959,57 +968,109 @@ public class GameService {
         p3.getHand().clear();
         p4.getHand().clear();
 
-        p1.addCardToHand("F5");
+        // 0 quit 0 4 quit 0 3 quit 0 3 quit
+        // stage 1: tackle 0 tackle 0 tackle 0 2 quit quit 2 quit
+        // stage 2: 4 quit 4 quit
+        // stage 3: 4 4 quit 4 4 quit
+        // stage 4: 5 5 quit 5 5 quit
+////////////////////////////////////////////
+//
+//
+//        p4.addCardToHand("F15");
+//        p4.addCardToHand("F20");
+//        p4.addCardToHand("F50");
+//        p4.addCardToHand("F30");
+//        p4.addCardToHand("F70");
+//        p4.addCardToHand("B15");
+//        p4.addCardToHand("L20");
+//        p4.addCardToHand("L20");
+//        p4.addCardToHand("E30");
+//
+//        p2.addCardToHand("F10");
+//        p2.addCardToHand("F15");
+//        p2.addCardToHand("F30");
+//        p2.addCardToHand("F40");
+//        p2.addCardToHand("F50");
+//        p2.addCardToHand("B15");
+//        p2.addCardToHand("L20");
+//        p2.addCardToHand("L20");
+//        p2.addCardToHand("E30");
+//
+//
+//        // q2 stage 1: 0 quit 0 2 quit 0 3 quit
+//
+//        p3.addCardToHand("F40");
+//        p3.addCardToHand("D5");
+//        p3.addCardToHand("D5");
+//        p3.addCardToHand("H10");
+//        p3.addCardToHand("H10");
+//        p3.addCardToHand("H10");
+//        p3.addCardToHand("H10");
+//
+//
+//        // P1 hand after draw end stage 1: F5 F10 F15 F15 F20 F20 F20 F20 F25 F25 F30
+//        // then p1 discards f5 f10 f15 f15
+//        // p1 new handa after refresh: F20 F20 F20 F20 F25 F25 F30
+//
+//
+//
+//        //////////////////////////////////////////////
+
+
+
+
+
         p1.addCardToHand("F5");
         p1.addCardToHand("F5");
         p1.addCardToHand("F10");
         p1.addCardToHand("F10");
         p1.addCardToHand("F15");
         p1.addCardToHand("F15");
-        p1.addCardToHand("F20");
-        p1.addCardToHand("F25");
         p1.addCardToHand("D5");
         p1.addCardToHand("H10");
+        p1.addCardToHand("H10");
         p1.addCardToHand("B15");
+        p1.addCardToHand("B15");
+        p1.addCardToHand("L20");
 
-        p2.addCardToHand("F5");
-        p2.addCardToHand("F5");
-        p2.addCardToHand("F5");
-        p2.addCardToHand("F15");
-        p2.addCardToHand("D5");
-        p2.addCardToHand("D5");
+        p2.addCardToHand("F40");
+        p2.addCardToHand("F50");
         p2.addCardToHand("H10");
+        p2.addCardToHand("H10");
+        p2.addCardToHand("S10");
+        p2.addCardToHand("S10");
+        p2.addCardToHand("S10");
         p2.addCardToHand("B15");
-        p2.addCardToHand("L20");
+        p2.addCardToHand("B15");
         p2.addCardToHand("L20");
         p2.addCardToHand("L20");
         p2.addCardToHand("E30");
 
         p3.addCardToHand("F5");
         p3.addCardToHand("F5");
-        p3.addCardToHand("F10");
-        p3.addCardToHand("F10");
-        p3.addCardToHand("F10");
-        p3.addCardToHand("F10");
-        p3.addCardToHand("F10");
-        p3.addCardToHand("F15");
-        p3.addCardToHand("F15");
-        p3.addCardToHand("F15");
-        p3.addCardToHand("F50");
+        p3.addCardToHand("F5");
+        p3.addCardToHand("F5");
         p3.addCardToHand("D5");
+        p3.addCardToHand("D5");
+        p3.addCardToHand("D5");
+        p3.addCardToHand("H10");
+        p3.addCardToHand("H10");
+        p3.addCardToHand("H10");
+        p3.addCardToHand("H10");
+        p3.addCardToHand("H10");
 
-        p4.addCardToHand("F20");
-        p4.addCardToHand("F20");
-        p4.addCardToHand("F20");
-        p4.addCardToHand("F30");
-        p4.addCardToHand("D5");
-        p4.addCardToHand("S10");
-        p4.addCardToHand("S10");
+        p4.addCardToHand("F50");
+        p4.addCardToHand("F70");
         p4.addCardToHand("H10");
         p4.addCardToHand("H10");
+        p4.addCardToHand("S10");
+        p4.addCardToHand("S10");
+        p4.addCardToHand("S10");
+        p4.addCardToHand("B15");
         p4.addCardToHand("B15");
         p4.addCardToHand("L20");
         p4.addCardToHand("L20");
+        p4.addCardToHand("E30");
 
         deck.getEventDeck().remove("Q3");
         deck.getEventDeck().add(0, "Q3");
@@ -1018,33 +1079,33 @@ public class GameService {
 
         // Rig the deck after initializing.
         deck.getAdventureDeck().add(0, "F25");// random for quest 2 stage 3
-        deck.getAdventureDeck().add(0, "D5");// random for quest 2 stage 3
-        deck.getAdventureDeck().add(0, "H10");// random for quest 2 stage 2
-        deck.getAdventureDeck().add(0, "L20");// random for quest 2 stage 2
-        deck.getAdventureDeck().add(0, "B15");// random for quest 2 stage 1
-        deck.getAdventureDeck().add(0, "F15");// random for quest 2 stage 1
+        deck.getAdventureDeck().add(0, "F25");// random for quest 2 stage 3
+        deck.getAdventureDeck().add(0, "F15");// random for quest 2 stage 2
+        deck.getAdventureDeck().add(0, "F15");// random for quest 2 stage 2
+        deck.getAdventureDeck().add(0, "D5");// random for quest 2 stage 1
+        deck.getAdventureDeck().add(0, "D5");// random for quest 2 stage 1
 
-        deck.getAdventureDeck().add(0, "F35"); // Sponsor drawn card after quest 1
+        deck.getAdventureDeck().add(0, "F30"); // Sponsor drawn card after quest 1
         deck.getAdventureDeck().add(0, "F25"); // Sponsor drawn card after quest 1
-        deck.getAdventureDeck().add(0, "D5"); // Sponsor drawn card after quest 1
-        deck.getAdventureDeck().add(0, "H10"); // Sponsor drawn card after quest 1
-        deck.getAdventureDeck().add(0, "B15"); // Sponsor drawn card after quest 1
         deck.getAdventureDeck().add(0, "F25"); // Sponsor drawn card after quest 1
         deck.getAdventureDeck().add(0, "F20"); // Sponsor drawn card after quest 1
+        deck.getAdventureDeck().add(0, "F20"); // Sponsor drawn card after quest 1
+        deck.getAdventureDeck().add(0, "F20"); // Sponsor drawn card after quest 1
+        deck.getAdventureDeck().add(0, "F20"); // Sponsor drawn card after quest 1
         deck.getAdventureDeck().add(0, "F15"); // Sponsor drawn card after quest 1
+        deck.getAdventureDeck().add(0, "F15"); // Sponsor drawn card after quest 1
+        deck.getAdventureDeck().add(0, "F10"); // Sponsor drawn card after quest 1
         deck.getAdventureDeck().add(0, "F5"); // Sponsor drawn card after quest 1
-        deck.getAdventureDeck().add(0, "D5"); // Sponsor drawn card after quest 1
-        deck.getAdventureDeck().add(0, "D5"); // Sponsor drawn card after quest 1
 
-        deck.getAdventureDeck().add(0, "S10");
-        deck.getAdventureDeck().add(0, "D5");
-        deck.getAdventureDeck().add(0, "L20");
-        deck.getAdventureDeck().add(0, "B15");
-        deck.getAdventureDeck().add(0, "B15");
-        deck.getAdventureDeck().add(0, "B15");
-        deck.getAdventureDeck().add(0, "H10");
-        deck.getAdventureDeck().add(0, "D5");
-        deck.getAdventureDeck().add(0, "S10");
+        deck.getAdventureDeck().add(0, "F20");
+        deck.getAdventureDeck().add(0, "F15");
+        deck.getAdventureDeck().add(0, "F15");
+        deck.getAdventureDeck().add(0, "F30");
+        deck.getAdventureDeck().add(0, "F30");
+        deck.getAdventureDeck().add(0, "F10");
+        deck.getAdventureDeck().add(0, "F10");
+        deck.getAdventureDeck().add(0, "F40");
+        deck.getAdventureDeck().add(0, "F5");
     }
 
     public void stopGame() {
