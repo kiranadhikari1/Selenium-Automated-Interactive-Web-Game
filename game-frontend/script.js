@@ -94,6 +94,12 @@ document.getElementById('rig-2').addEventListener('click', async () => {
     fetchMessage();
 });
 
+// Buttons for rigging deck + starting hand | Scenario # 2
+document.getElementById('rig-3').addEventListener('click', async () => {
+    await fetch('http://127.0.0.1:8080/game/initThirdScenario', { method: 'POST' });
+    fetchMessage();
+});
+
 // Reset the game
 document.getElementById('reset-button').addEventListener('click', async () => {
     await fetch('http://127.0.0.1:8080/game/reset', { method: 'POST' });

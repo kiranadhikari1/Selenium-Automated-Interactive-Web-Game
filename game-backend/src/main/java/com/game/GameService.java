@@ -1142,7 +1142,7 @@ public class GameService {
         deck.getEventDeck().add(0, "Q4");
 
         // P1 refresh cards quest 2
-        deck.getAdventureDeck().add(0, "F40");
+        deck.getAdventureDeck().add(0, "F30");
         deck.getAdventureDeck().add(0, "S10");
         deck.getAdventureDeck().add(0, "S10");
         deck.getAdventureDeck().add(0, "S10");

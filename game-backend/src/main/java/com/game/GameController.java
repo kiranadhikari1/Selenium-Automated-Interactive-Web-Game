@@ -74,6 +74,21 @@ public class GameController {
         }).start();
     }
 
+    @PostMapping("initThirdScenario")
+    public void rigDeckForScenario3(){
+        gameService.initPlayers();
+        gameService.initDecks();
+        gameService.shuffleDecks();
+        gameService.distributeCardsToPlayer();
+
+        gameService.initializeThirdScenario();
+
+        new Thread(() -> {
+            System.out.println("Third scenario initialized. Starting hands and deck have been rigged."); // remove later
+            gameService.playGame();
+        }).start();
+    }
+
     @PostMapping("/reset")
     public void resetGame() throws InterruptedException {
         gameService.stopGame();
