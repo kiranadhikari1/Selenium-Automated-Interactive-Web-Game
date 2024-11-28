@@ -976,22 +976,30 @@ public class GameService {
 ////////////////////////////////////////////
 //
 //
+//        // draws D5 in quest 2 stage 1 and plays that same card in that attack
+        // draws f15 in stage 2 and plays B15
+        // draw f25 and play E30 in stage 3
 //        p4.addCardToHand("F15");
+//        p2.addCardToHand("F15");
 //        p4.addCardToHand("F20");
+//        p4.addCardToHand("F25");
 //        p4.addCardToHand("F50");
 //        p4.addCardToHand("F30");
 //        p4.addCardToHand("F70");
-//        p4.addCardToHand("B15");
 //        p4.addCardToHand("L20");
 //        p4.addCardToHand("L20");
 //        p4.addCardToHand("E30");
 //
+//        // draws D5 in quest 2 stage 1 and plays that same card in that attack
+        // draws f15 in stage 2 and plays B15
+        // draw f25 and play E30 in stage 3
 //        p2.addCardToHand("F10");
 //        p2.addCardToHand("F15");
+//        p2.addCardToHand("F15");
+//        p2.addCardToHand("F25");
 //        p2.addCardToHand("F30");
 //        p2.addCardToHand("F40");
 //        p2.addCardToHand("F50");
-//        p2.addCardToHand("B15");
 //        p2.addCardToHand("L20");
 //        p2.addCardToHand("L20");
 //        p2.addCardToHand("E30");
@@ -1078,6 +1086,16 @@ public class GameService {
         deck.getEventDeck().add(0, "Q4");
 
         // Rig the deck after initializing.
+
+        deck.getAdventureDeck().add(0, "L20"); // sponsor draw q2 end
+        deck.getAdventureDeck().add(0, "B15"); // sponsor draw q2 end
+        deck.getAdventureDeck().add(0, "B15"); // sponsor draw q2 end
+        deck.getAdventureDeck().add(0, "S10"); // sponsor draw q2 end
+        deck.getAdventureDeck().add(0, "F30"); // sponsor draw q2 end
+        deck.getAdventureDeck().add(0, "F25"); // sponsor draw q2 end
+        deck.getAdventureDeck().add(0, "F20"); // sponsor draw q2 end
+        deck.getAdventureDeck().add(0, "F20"); // sponsor draw q2 end
+
         deck.getAdventureDeck().add(0, "F25");// random for quest 2 stage 3
         deck.getAdventureDeck().add(0, "F25");// random for quest 2 stage 3
         deck.getAdventureDeck().add(0, "F15");// random for quest 2 stage 2

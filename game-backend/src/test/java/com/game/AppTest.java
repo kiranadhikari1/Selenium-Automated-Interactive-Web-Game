@@ -197,6 +197,8 @@ public class AppTest{
         assertEquals(0, Integer.parseInt(p3ShieldCount));
         assertEquals(4, Integer.parseInt(p4ShieldCount));
 
+        // NEED TO ASSERT HAND-COUNT + END-HAND
+
         Thread.sleep(10000); // wait 20s to review game
         webDriver.quit();
     }
@@ -382,8 +384,68 @@ public class AppTest{
         Thread.sleep(1000);
 
         // q2 stage 1
+        withdrawButton.click();
+        Thread.sleep(1000);
+        tackleButton.click();
+        Thread.sleep(1000);
+        tackleButton.click();
+        Thread.sleep(1000);
+        cardPos5.click();
+        Thread.sleep(1000);
+        quitButton.click();
+        Thread.sleep(1000);
+        cardPos5.click();
+        Thread.sleep(1000);
+        quitButton.click();
+        Thread.sleep(1000);
+        // q2 stage 2
+        tackleButton.click();
+        Thread.sleep(1000);
+        tackleButton.click();
+        Thread.sleep(1000);
+        cardPos6.click();
+        Thread.sleep(1000);
+        quitButton.click();
+        Thread.sleep(1000);
+        cardPos6.click();
+        Thread.sleep(1000);
+        quitButton.click();
+        Thread.sleep(1000);
+        // q2 stage 3
+        tackleButton.click();
+        Thread.sleep(1000);
+        tackleButton.click();
+        Thread.sleep(1000);
+        cardPos9.click();
+        Thread.sleep(1000);
+        quitButton.click();
+        Thread.sleep(1000);
+        cardPos9.click();
+        Thread.sleep(1000);
+        quitButton.click();
+        Thread.sleep(1000);
+        // p3 sponsor trims f20 f25 f30
+        cardPos0.click();
+        Thread.sleep(1000);
+        cardPos1.click();
+        Thread.sleep(1000);
+        cardPos1.click();
+        Thread.sleep(1000);
+        // end hand p3: //  f20 f40 d5 d5 s10 h10 h10 h10 h10 b15 b15 l20
 
 
+
+        String p1ShieldCount = p1ShieldElement.getText().split(":")[1].split("\\|")[0].trim();
+        String p2ShieldCount = p2ShieldElement.getText().split(":")[1].split("\\|")[0].trim();
+        String p3ShieldCount = p3ShieldElement.getText().split(":")[1].split("\\|")[0].trim();
+        String p4ShieldCount = p4ShieldElement.getText().split(":")[1].split("\\|")[0].trim();
+
+        assertEquals(0, Integer.parseInt(p1ShieldCount));
+        assertEquals(7, Integer.parseInt(p2ShieldCount));
+        assertEquals(0, Integer.parseInt(p3ShieldCount));
+        assertEquals(7, Integer.parseInt(p4ShieldCount));
+
+        // NEED TO ASSERT HAND-COUNT + END-HAND
 
     }
 }
