@@ -968,66 +968,6 @@ public class GameService {
         p3.getHand().clear();
         p4.getHand().clear();
 
-        // 0 quit 0 4 quit 0 3 quit 0 3 quit
-        // stage 1: tackle 0 tackle 0 tackle 0 2 quit quit 2 quit
-        // stage 2: 4 quit 4 quit
-        // stage 3: 4 4 quit 4 4 quit
-        // stage 4: 5 5 quit 5 5 quit
-////////////////////////////////////////////
-//
-//
-//        // draws D5 in quest 2 stage 1 and plays that same card in that attack
-        // draws f15 in stage 2 and plays B15
-        // draw f25 and play E30 in stage 3
-//        p4.addCardToHand("F15");
-//        p2.addCardToHand("F15");
-//        p4.addCardToHand("F20");
-//        p4.addCardToHand("F25");
-//        p4.addCardToHand("F50");
-//        p4.addCardToHand("F30");
-//        p4.addCardToHand("F70");
-//        p4.addCardToHand("L20");
-//        p4.addCardToHand("L20");
-//        p4.addCardToHand("E30");
-//
-//        // draws D5 in quest 2 stage 1 and plays that same card in that attack
-        // draws f15 in stage 2 and plays B15
-        // draw f25 and play E30 in stage 3
-//        p2.addCardToHand("F10");
-//        p2.addCardToHand("F15");
-//        p2.addCardToHand("F15");
-//        p2.addCardToHand("F25");
-//        p2.addCardToHand("F30");
-//        p2.addCardToHand("F40");
-//        p2.addCardToHand("F50");
-//        p2.addCardToHand("L20");
-//        p2.addCardToHand("L20");
-//        p2.addCardToHand("E30");
-//
-//
-//        // q2 stage 1: 0 quit 0 2 quit 0 3 quit
-//
-//        p3.addCardToHand("F40");
-//        p3.addCardToHand("D5");
-//        p3.addCardToHand("D5");
-//        p3.addCardToHand("H10");
-//        p3.addCardToHand("H10");
-//        p3.addCardToHand("H10");
-//        p3.addCardToHand("H10");
-//
-//
-//        // P1 hand after draw end stage 1: F5 F10 F15 F15 F20 F20 F20 F20 F25 F25 F30
-//        // then p1 discards f5 f10 f15 f15
-//        // p1 new handa after refresh: F20 F20 F20 F20 F25 F25 F30
-//
-//
-//
-//        //////////////////////////////////////////////
-
-
-
-
-
         p1.addCardToHand("F5");
         p1.addCardToHand("F5");
         p1.addCardToHand("F10");
@@ -1124,6 +1064,228 @@ public class GameService {
         deck.getAdventureDeck().add(0, "F10");
         deck.getAdventureDeck().add(0, "F40");
         deck.getAdventureDeck().add(0, "F5");
+    }
+
+    public void initializeThirdScenario(){
+        Player p1 = getPlayers().get(0);
+        Player p2 = getPlayers().get(1);
+        Player p3 = getPlayers().get(2);
+        Player p4 = getPlayers().get(3);
+
+        p1.getHand().clear();
+        p2.getHand().clear();
+        p3.getHand().clear();
+        p4.getHand().clear();
+
+        p1.addCardToHand("F5");
+        p1.addCardToHand("F5");
+        p1.addCardToHand("F10");
+        p1.addCardToHand("F10");
+        p1.addCardToHand("F15");
+        p1.addCardToHand("F15");
+        p1.addCardToHand("F20");
+        p1.addCardToHand("F20");
+        p1.addCardToHand("D5");
+        p1.addCardToHand("D5");
+        p1.addCardToHand("D5");
+        p1.addCardToHand("D5");
+
+        p2.addCardToHand("F25");
+        p2.addCardToHand("F30");
+        p2.addCardToHand("H10");
+        p2.addCardToHand("H10");
+        p2.addCardToHand("S10");
+        p2.addCardToHand("S10");
+        p2.addCardToHand("S10");
+        p2.addCardToHand("B15");
+        p2.addCardToHand("B15");
+        p2.addCardToHand("L20");
+        p2.addCardToHand("L20");
+        p2.addCardToHand("E30");
+
+        p3.addCardToHand("F25");
+        p3.addCardToHand("F30");
+        p3.addCardToHand("H10");
+        p3.addCardToHand("H10");
+        p3.addCardToHand("S10");
+        p3.addCardToHand("S10");
+        p3.addCardToHand("S10");
+        p3.addCardToHand("B15");
+        p3.addCardToHand("B15");
+        p3.addCardToHand("L20");
+        p3.addCardToHand("L20");
+        p3.addCardToHand("E30");
+
+        p4.addCardToHand("F25");
+        p4.addCardToHand("F30");
+        p4.addCardToHand("F70");
+        p4.addCardToHand("H10");
+        p4.addCardToHand("H10");
+        p4.addCardToHand("S10");
+        p4.addCardToHand("S10");
+        p4.addCardToHand("S10");
+        p4.addCardToHand("B15");
+        p4.addCardToHand("B15");
+        p4.addCardToHand("L20");
+        p4.addCardToHand("L20");
+
+        // Event deck rigged cards
+        deck.getEventDeck().remove("Q3");
+        deck.getEventDeck().add(0, "Q3");
+        deck.getEventDeck().remove("Queen’s favor");
+        deck.getEventDeck().add(0, "Queen’s favor");
+        deck.getEventDeck().remove("Prosperity");
+        deck.getEventDeck().add(0, "Prosperity");
+        deck.getEventDeck().remove("Plague");
+        deck.getEventDeck().add(0, "Plague");
+        deck.getEventDeck().remove("Q4");
+        deck.getEventDeck().add(0, "Q4");
+
+        // P1 refresh cards quest 2
+        deck.getAdventureDeck().add(0, "F40");
+        deck.getAdventureDeck().add(0, "S10");
+        deck.getAdventureDeck().add(0, "S10");
+        deck.getAdventureDeck().add(0, "S10");
+        deck.getAdventureDeck().add(0, "S10");
+        deck.getAdventureDeck().add(0, "H10");
+        deck.getAdventureDeck().add(0, "H10");
+        deck.getAdventureDeck().add(0, "H10");
+
+        // Quest (2)- 3-stage quest
+        deck.getAdventureDeck().add(0, "F50");
+        deck.getAdventureDeck().add(0, "F40");
+
+        deck.getAdventureDeck().add(0, "S10");
+        deck.getAdventureDeck().add(0, "S10");
+
+        deck.getAdventureDeck().add(0, "F50");
+        deck.getAdventureDeck().add(0, "H10");
+        deck.getAdventureDeck().add(0, "B15");
+
+        // P4 queens favor cards drawn
+        deck.getAdventureDeck().add(0, "F25");
+        deck.getAdventureDeck().add(0, "F30");
+
+        // prosperity drawn cards
+        deck.getAdventureDeck().add(0, "D5"); // p4 draws
+        deck.getAdventureDeck().add(0, "D5"); // p4 draws
+        deck.getAdventureDeck().add(0, "F40"); // p3 draws
+        deck.getAdventureDeck().add(0, "B15"); // p3 draws
+        deck.getAdventureDeck().add(0, "S10"); // p2 draws
+        deck.getAdventureDeck().add(0, "H10"); // p2 draws
+        deck.getAdventureDeck().add(0, "F25"); // p1 2 cards drawn
+        deck.getAdventureDeck().add(0, "F25"); // p1 2 cards drawn
+
+        deck.getAdventureDeck().add(0, "F15"); // p1 sponsor refresh cards
+        deck.getAdventureDeck().add(0, "F15"); // p1 sponsor refresh cards
+        deck.getAdventureDeck().add(0, "F15"); // p1 sponsor refresh cards
+        deck.getAdventureDeck().add(0, "F15"); // p1 sponsor refresh cards
+        deck.getAdventureDeck().add(0, "F10"); // p1 sponsor refresh cards
+        deck.getAdventureDeck().add(0, "F10"); // p1 sponsor refresh cards
+        deck.getAdventureDeck().add(0, "F5"); // p1 sponsor refresh cards
+        deck.getAdventureDeck().add(0, "F5"); // p1 sponsor refresh cards
+
+        deck.getAdventureDeck().add(0, "F20");
+        deck.getAdventureDeck().add(0, "F10");
+        deck.getAdventureDeck().add(0, "F5");
+        deck.getAdventureDeck().add(0, "F20");
+        deck.getAdventureDeck().add(0, "F10");
+        deck.getAdventureDeck().add(0, "F5");
+        deck.getAdventureDeck().add(0, "F25");
+        deck.getAdventureDeck().add(0, "F5");
+        deck.getAdventureDeck().add(0, "F15");
+        deck.getAdventureDeck().add(0, "F20");
+        deck.getAdventureDeck().add(0, "F10");
+        deck.getAdventureDeck().add(0, "F5");
+    }
+
+    public void initializeFourthScenario(){
+        Player p1 = getPlayers().get(0);
+        Player p2 = getPlayers().get(1);
+        Player p3 = getPlayers().get(2);
+        Player p4 = getPlayers().get(3);
+
+        p1.getHand().clear();
+        p2.getHand().clear();
+        p3.getHand().clear();
+        p4.getHand().clear();
+
+        p1.addCardToHand("F50");
+        p1.addCardToHand("F70");
+        p1.addCardToHand("D5");
+        p1.addCardToHand("D5");
+        p1.addCardToHand("H10");
+        p1.addCardToHand("H10");
+        p1.addCardToHand("S10");
+        p1.addCardToHand("S10");
+        p1.addCardToHand("B15");
+        p1.addCardToHand("B15");
+        p1.addCardToHand("L20");
+        p1.addCardToHand("L20");
+
+        p2.addCardToHand("F5");
+        p2.addCardToHand("F5");
+        p2.addCardToHand("F10");
+        p2.addCardToHand("F15");
+        p2.addCardToHand("F15");
+        p2.addCardToHand("F20");
+        p2.addCardToHand("F20");
+        p2.addCardToHand("F25");
+        p2.addCardToHand("F30");
+        p2.addCardToHand("F30");
+        p2.addCardToHand("F40");
+        p2.addCardToHand("E30");
+
+        p3.addCardToHand("F5");
+        p3.addCardToHand("F5");
+        p3.addCardToHand("F10");
+        p3.addCardToHand("F15");
+        p3.addCardToHand("F15");
+        p3.addCardToHand("F20");
+        p3.addCardToHand("F20");
+        p3.addCardToHand("F25");
+        p3.addCardToHand("F25");
+        p3.addCardToHand("F30");
+        p3.addCardToHand("F40");
+        p3.addCardToHand("L20");
+
+        p4.addCardToHand("F5");
+        p4.addCardToHand("F5");
+        p4.addCardToHand("F10");
+        p4.addCardToHand("F15");
+        p4.addCardToHand("F15");
+        p4.addCardToHand("F20");
+        p4.addCardToHand("F20");
+        p4.addCardToHand("F25");
+        p4.addCardToHand("F25");
+        p4.addCardToHand("F30");
+        p4.addCardToHand("F50");
+        p4.addCardToHand("E30");
+
+        deck.getEventDeck().remove("Q2");
+        deck.getEventDeck().add(0, "Q2");
+
+
+        // sponsor draws 14 cards after quest (P1)
+        deck.getAdventureDeck().add(0, "S10");
+        deck.getAdventureDeck().add(0, "S10");
+        deck.getAdventureDeck().add(0, "S10");
+        deck.getAdventureDeck().add(0, "H10");
+        deck.getAdventureDeck().add(0, "H10");
+        deck.getAdventureDeck().add(0, "H10");
+        deck.getAdventureDeck().add(0, "H10");
+        deck.getAdventureDeck().add(0, "D5");
+        deck.getAdventureDeck().add(0, "D5");
+        deck.getAdventureDeck().add(0, "D5");
+        deck.getAdventureDeck().add(0, "D5");
+        deck.getAdventureDeck().add(0, "F15");
+        deck.getAdventureDeck().add(0, "F10");
+        deck.getAdventureDeck().add(0, "F5");
+
+        deck.getAdventureDeck().add(0, "F10");
+        deck.getAdventureDeck().add(0, "F15");
+        deck.getAdventureDeck().add(0, "F5");
+
     }
 
     public void stopGame() {
