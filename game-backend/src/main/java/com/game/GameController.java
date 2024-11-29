@@ -1,5 +1,7 @@
 package com.game;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -103,6 +105,15 @@ public class GameController {
             stats.append(p.getPlayerID()).append("|").append(p.getShieldCount()).append("|").append(p.handSize()).append("\n");
         }
         return stats.toString().trim();
+    }
+
+    @GetMapping("/player-hand")
+    public List<List<String>> getPlayerHands(){
+        List<List<String>> playerHands = new ArrayList<>();
+        for (Player player : gameService.getPlayers()){
+            playerHands.add(new ArrayList<>(player.getHand()));
+        }
+        return playerHands;
     }
 }
 

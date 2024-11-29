@@ -1,18 +1,30 @@
 package com.game;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URL;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AppTest{
 
     @Test
     @DisplayName("A-TEST JP-Scenario")
-    void aTest() throws InterruptedException {
+    void aTest() throws InterruptedException, IOException {
         WebDriver webDriver = new ChromeDriver();
         webDriver.get("http://127.0.0.1:8081");
 
@@ -187,6 +199,44 @@ public class AppTest{
         cardPos0.click();
         Thread.sleep(1000);
 
+        // Asserts Below
+
+        List<String> p1ExpectedFinalHand = new ArrayList<>();
+        p1ExpectedFinalHand.add("F5");
+        p1ExpectedFinalHand.add("F10");
+        p1ExpectedFinalHand.add("F15");
+        p1ExpectedFinalHand.add("F15");
+        p1ExpectedFinalHand.add("F30");
+        p1ExpectedFinalHand.add("H10");
+        p1ExpectedFinalHand.add("B15");
+        p1ExpectedFinalHand.add("B15");
+        p1ExpectedFinalHand.add("L20");
+
+        List<String> p3ExpectedFinalHand = new ArrayList<>();
+        p3ExpectedFinalHand.add("F5");
+        p3ExpectedFinalHand.add("F5");
+        p3ExpectedFinalHand.add("F15");
+        p3ExpectedFinalHand.add("F30");
+        p3ExpectedFinalHand.add("S10");
+
+        List<String> p4ExpectedFinalHand = new ArrayList<>();
+        p4ExpectedFinalHand.add("F15");
+        p4ExpectedFinalHand.add("F15");
+        p4ExpectedFinalHand.add("F40");
+        p4ExpectedFinalHand.add("L20");
+
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create("http://127.0.0.1:8080/game/player-hand")).GET().build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        ObjectMapper objectMapper = new ObjectMapper();
+        List<List<String>> playerHands = objectMapper.readValue(response.body(), List.class);
+
+        List<String> p1Hand = playerHands.get(0);
+        List<String> p2Hand = playerHands.get(1);
+        List<String> p3Hand = playerHands.get(2);
+        List<String> p4Hand = playerHands.get(3);
+
         String p1ShieldCount = p1ShieldElement.getText().split(":")[1].split("\\|")[0].trim();
         String p2ShieldCount = p2ShieldElement.getText().split(":")[1].split("\\|")[0].trim();
         String p3ShieldCount = p3ShieldElement.getText().split(":")[1].split("\\|")[0].trim();
@@ -197,15 +247,24 @@ public class AppTest{
         assertEquals(0, Integer.parseInt(p3ShieldCount));
         assertEquals(4, Integer.parseInt(p4ShieldCount));
 
-        // NEED TO ASSERT HAND-COUNT + END-HAND
+        assertEquals(p1ExpectedFinalHand, p1Hand);
+        assertEquals(9, p1Hand.size());
 
-        Thread.sleep(10000); // wait 20s to review game
+        assertEquals(12, p2Hand.size());
+
+        assertEquals(p3ExpectedFinalHand, p3Hand);
+        assertEquals(5, p3Hand.size());
+
+        assertEquals(p4ExpectedFinalHand, p4Hand);
+        assertEquals(4, p4Hand.size());
+
+        Thread.sleep(20000); // wait 20s to review game
         webDriver.quit();
     }
 
     @Test
     @DisplayName("2winner_game_2winner_quest")
-    void scenario2Test() throws InterruptedException {
+    void scenario2Test() throws InterruptedException, IOException {
         WebDriver webDriver = new ChromeDriver();
         webDriver.get("http://127.0.0.1:8081");
 
@@ -433,6 +492,68 @@ public class AppTest{
         Thread.sleep(1000);
         // end hand p3: //  f20 f40 d5 d5 s10 h10 h10 h10 h10 b15 b15 l20
 
+        List<String> p1ExpectedFinalHand = new ArrayList<>();
+        p1ExpectedFinalHand.add("F15");
+        p1ExpectedFinalHand.add("F15");
+        p1ExpectedFinalHand.add("F20");
+        p1ExpectedFinalHand.add("F20");
+        p1ExpectedFinalHand.add("F20");
+        p1ExpectedFinalHand.add("F20");
+        p1ExpectedFinalHand.add("F25");
+        p1ExpectedFinalHand.add("F25");
+        p1ExpectedFinalHand.add("F30");
+        p1ExpectedFinalHand.add("H10");
+        p1ExpectedFinalHand.add("B15");
+        p1ExpectedFinalHand.add("L20");
+
+        List<String> p2ExpectedFinalHand = new ArrayList<>();
+        p2ExpectedFinalHand.add("F10");
+        p2ExpectedFinalHand.add("F15");
+        p2ExpectedFinalHand.add("F15");
+        p2ExpectedFinalHand.add("F25");
+        p2ExpectedFinalHand.add("F30");
+        p2ExpectedFinalHand.add("F40");
+        p2ExpectedFinalHand.add("F50");
+        p2ExpectedFinalHand.add("L20");
+        p2ExpectedFinalHand.add("L20");
+
+        List<String> p3ExpectedFinalHand = new ArrayList<>();
+        p3ExpectedFinalHand.add("F20");
+        p3ExpectedFinalHand.add("F40");
+        p3ExpectedFinalHand.add("D5");
+        p3ExpectedFinalHand.add("D5");
+        p3ExpectedFinalHand.add("S10");
+        p3ExpectedFinalHand.add("H10");
+        p3ExpectedFinalHand.add("H10");
+        p3ExpectedFinalHand.add("H10");
+        p3ExpectedFinalHand.add("H10");
+        p3ExpectedFinalHand.add("B15");
+        p3ExpectedFinalHand.add("B15");
+        p3ExpectedFinalHand.add("L20");
+
+        List<String> p4ExpectedFinalHand = new ArrayList<>();
+        p4ExpectedFinalHand.add("F15");
+        p4ExpectedFinalHand.add("F15");
+        p4ExpectedFinalHand.add("F20");
+        p4ExpectedFinalHand.add("F25");
+        p4ExpectedFinalHand.add("F30");
+        p4ExpectedFinalHand.add("F50");
+        p4ExpectedFinalHand.add("F70");
+        p4ExpectedFinalHand.add("L20");
+        p4ExpectedFinalHand.add("L20");
+
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create("http://127.0.0.1:8080/game/player-hand")).GET().build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        ObjectMapper objectMapper = new ObjectMapper();
+        List<List<String>> playerHands = objectMapper.readValue(response.body(), List.class);
+
+        List<String> p1Hand = playerHands.get(0);
+        List<String> p2Hand = playerHands.get(1);
+        List<String> p3Hand = playerHands.get(2);
+        List<String> p4Hand = playerHands.get(3);
+
         String p1ShieldCount = p1ShieldElement.getText().split(":")[1].split("\\|")[0].trim();
         String p2ShieldCount = p2ShieldElement.getText().split(":")[1].split("\\|")[0].trim();
         String p3ShieldCount = p3ShieldElement.getText().split(":")[1].split("\\|")[0].trim();
@@ -443,13 +564,25 @@ public class AppTest{
         assertEquals(0, Integer.parseInt(p3ShieldCount));
         assertEquals(7, Integer.parseInt(p4ShieldCount));
 
-        // NEED TO ASSERT HAND-COUNT + END-HAND
+        assertEquals(p1ExpectedFinalHand, p1Hand);
+        assertEquals(12, p1Hand.size());
 
+        assertEquals(p2ExpectedFinalHand, p2Hand);
+        assertEquals(9, p2Hand.size());
+
+        assertEquals(p3ExpectedFinalHand, p3Hand);
+        assertEquals(12, p3Hand.size());
+
+        assertEquals(p4ExpectedFinalHand, p4Hand);
+        assertEquals(9, p4Hand.size());
+
+        Thread.sleep(20000); // wait 20s to review game
+        webDriver.quit();
     }
 
     @Test
     @DisplayName("1winner_game_with_events")
-    public void scenario3Test() throws InterruptedException {
+    public void scenario3Test() throws InterruptedException, IOException {
         WebDriver webDriver = new ChromeDriver();
         webDriver.get("http://127.0.0.1:8081");
 
@@ -544,16 +677,16 @@ public class AppTest{
         tackleButton.click();
         Thread.sleep(1000);
 
-        // stage 2 attack: 3 quit 3 quit 4 quit
-        cardPos3.click();
+        // stage 2 attack: 3 quit 3 quit 4 quit | CORRECTED: 5 5 6
+        cardPos5.click();
         Thread.sleep(1000);
         quitButton.click();
         Thread.sleep(1000);
-        cardPos3.click();
+        cardPos5.click();
         Thread.sleep(1000);
         quitButton.click();
         Thread.sleep(1000);
-        cardPos4.click();
+        cardPos6.click();
         Thread.sleep(1000);
         quitButton.click();
         Thread.sleep(1000);
@@ -679,7 +812,7 @@ public class AppTest{
         cardPos0.click();
         Thread.sleep(1000);
 
-        // stage 1 attack: // // // stage 1 attack: 8 quit 8 quit 7 quit
+        // stage 1 attack: // // // stage 1 attack: 8 quit 8 quit 9 quit ||
         cardPos8.click();
         Thread.sleep(1000);
         quitButton.click();
@@ -688,12 +821,12 @@ public class AppTest{
         Thread.sleep(1000);
         quitButton.click();
         Thread.sleep(1000);
-        cardPos7.click();
+        cardPos9.click();
         Thread.sleep(1000);
         quitButton.click();
         Thread.sleep(1000);
 
-        // stage 2: // // stage 2: 9 3 quit 9 6 quit
+        // stage 2: // // stage 2: 9 7 quit 9 6 quit |!! updated
         tackleButton.click();
         Thread.sleep(1000);
         tackleButton.click();
@@ -701,7 +834,7 @@ public class AppTest{
 
         cardPos9.click();
         Thread.sleep(1000);
-        cardPos3.click();
+        cardPos7.click();
         Thread.sleep(1000);
         quitButton.click();
         Thread.sleep(1000);
@@ -737,6 +870,69 @@ public class AppTest{
         cardPos0.click();
         Thread.sleep(1000);
 
+        List<String> p1ExpectedFinalHand = new ArrayList<>();
+        // p1: d5 d5 h10 h10 h10 s10 s10 s10 s10 f25 f25 f35
+        p1ExpectedFinalHand.add("F25");
+        p1ExpectedFinalHand.add("F25");
+        p1ExpectedFinalHand.add("F35");
+        p1ExpectedFinalHand.add("D5");
+        p1ExpectedFinalHand.add("D5");
+        p1ExpectedFinalHand.add("S10");
+        p1ExpectedFinalHand.add("S10");
+        p1ExpectedFinalHand.add("S10");
+        p1ExpectedFinalHand.add("S10");
+        p1ExpectedFinalHand.add("H10");
+        p1ExpectedFinalHand.add("H10");
+        p1ExpectedFinalHand.add("H10");
+
+        List<String> p2ExpectedFinalHand = new ArrayList<>();
+        p2ExpectedFinalHand.add("F15");
+        p2ExpectedFinalHand.add("F25");
+        p2ExpectedFinalHand.add("F30");
+        p2ExpectedFinalHand.add("F40");
+        p2ExpectedFinalHand.add("S10");
+        p2ExpectedFinalHand.add("S10");
+        p2ExpectedFinalHand.add("S10");
+        p2ExpectedFinalHand.add("H10");
+        p2ExpectedFinalHand.add("E30");
+
+        List<String> p3ExpectedFinalHand = new ArrayList<>();
+        p3ExpectedFinalHand.add("F10");
+        p3ExpectedFinalHand.add("F25");
+        p3ExpectedFinalHand.add("F30");
+        p3ExpectedFinalHand.add("F40");
+        p3ExpectedFinalHand.add("F50");
+        p3ExpectedFinalHand.add("S10");
+        p3ExpectedFinalHand.add("S10");
+        p3ExpectedFinalHand.add("H10");
+        p3ExpectedFinalHand.add("H10");
+        p3ExpectedFinalHand.add("L20");
+
+        List<String> p4ExpectedFinalHand = new ArrayList<>();
+        p4ExpectedFinalHand.add("F25");
+        p4ExpectedFinalHand.add("F25");
+        p4ExpectedFinalHand.add("F30");
+        p4ExpectedFinalHand.add("F50");
+        p4ExpectedFinalHand.add("F70");
+        p4ExpectedFinalHand.add("D5");
+        p4ExpectedFinalHand.add("D5");
+        p4ExpectedFinalHand.add("S10");
+        p4ExpectedFinalHand.add("S10");
+        p4ExpectedFinalHand.add("B15");
+        p4ExpectedFinalHand.add("L20");
+
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create("http://127.0.0.1:8080/game/player-hand")).GET().build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        ObjectMapper objectMapper = new ObjectMapper();
+        List<List<String>> playerHands = objectMapper.readValue(response.body(), List.class);
+
+        List<String> p1Hand = playerHands.get(0);
+        List<String> p2Hand = playerHands.get(1);
+        List<String> p3Hand = playerHands.get(2);
+        List<String> p4Hand = playerHands.get(3);
+
         String p1ShieldCount = p1ShieldElement.getText().split(":")[1].split("\\|")[0].trim();
         String p2ShieldCount = p2ShieldElement.getText().split(":")[1].split("\\|")[0].trim();
         String p3ShieldCount = p3ShieldElement.getText().split(":")[1].split("\\|")[0].trim();
@@ -747,6 +943,19 @@ public class AppTest{
         assertEquals(7, Integer.parseInt(p3ShieldCount));
         assertEquals(4, Integer.parseInt(p4ShieldCount));
 
-        // need to add hand asserts!
+        assertEquals(p1ExpectedFinalHand, p1Hand);
+        assertEquals(12, p1Hand.size());
+
+        assertEquals(p2ExpectedFinalHand, p2Hand);
+        assertEquals(9, p2Hand.size());
+
+        assertEquals(p3ExpectedFinalHand, p3Hand);
+        assertEquals(10, p3Hand.size());
+
+        assertEquals(p4ExpectedFinalHand, p4Hand);
+        assertEquals(11, p4Hand.size());
+
+        Thread.sleep(20000); // wait 20s to review game
+        webDriver.quit();
     }
 }
