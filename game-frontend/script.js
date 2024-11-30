@@ -94,9 +94,15 @@ document.getElementById('rig-2').addEventListener('click', async () => {
     fetchMessage();
 });
 
-// Buttons for rigging deck + starting hand | Scenario # 2
+// Buttons for rigging deck + starting hand | Scenario # 3
 document.getElementById('rig-3').addEventListener('click', async () => {
     await fetch('http://127.0.0.1:8080/game/initThirdScenario', { method: 'POST' });
+    fetchMessage();
+});
+
+// Buttons for rigging deck + starting hand | Scenario # 4
+document.getElementById('rig-4').addEventListener('click', async () => {
+    await fetch('http://127.0.0.1:8080/game/initFourthScenario', { method: 'POST' });
     fetchMessage();
 });
 

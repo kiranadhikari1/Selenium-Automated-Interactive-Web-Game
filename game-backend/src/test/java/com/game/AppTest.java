@@ -9,9 +9,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
 import java.net.URI;
-import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -954,6 +952,206 @@ public class AppTest{
 
         assertEquals(p4ExpectedFinalHand, p4Hand);
         assertEquals(11, p4Hand.size());
+
+        Thread.sleep(20000); // wait 20s to review game
+        webDriver.quit();
+    }
+
+    @Test
+    @DisplayName("0_winner_quest")
+    public void scenarioFourTest() throws InterruptedException, IOException {
+        WebDriver webDriver = new ChromeDriver();
+        webDriver.get("http://127.0.0.1:8081");
+
+        // Initialize all buttons using their ID's
+        WebElement resetButton = webDriver.findElement(By.id("reset-button"));
+        WebElement fourthScenarioButton = webDriver.findElement(By.id("rig-4"));
+
+        WebElement yesButton = webDriver.findElement(By.id("y-button"));
+        WebElement noButton = webDriver.findElement(By.id("n-button"));
+        WebElement quitButton = webDriver.findElement(By.id("quit-button"));
+        WebElement tackleButton = webDriver.findElement(By.id("tackle-button"));
+        WebElement withdrawButton = webDriver.findElement(By.id("withdraw-button"));
+        WebElement enterButton = webDriver.findElement(By.id("enter-button"));
+
+        WebElement cardPos0 = webDriver.findElement(By.id("pos-0"));
+        WebElement cardPos1 = webDriver.findElement(By.id("pos-1"));
+        WebElement cardPos2 = webDriver.findElement(By.id("pos-2"));
+        WebElement cardPos3 = webDriver.findElement(By.id("pos-3"));
+        WebElement cardPos4 = webDriver.findElement(By.id("pos-4"));
+        WebElement cardPos5 = webDriver.findElement(By.id("pos-5"));
+        WebElement cardPos6 = webDriver.findElement(By.id("pos-6"));
+        WebElement cardPos7 = webDriver.findElement(By.id("pos-7"));
+        WebElement cardPos8 = webDriver.findElement(By.id("pos-8"));
+        WebElement cardPos9 = webDriver.findElement(By.id("pos-9"));
+        WebElement cardPos10 = webDriver.findElement(By.id("pos-10"));
+        WebElement cardPos11 = webDriver.findElement(By.id("pos-11"));
+
+        WebElement p1ShieldElement = webDriver.findElement(By.id("p1-shieldCount"));
+        WebElement p2ShieldElement = webDriver.findElement(By.id("p2-shieldCount"));
+        WebElement p3ShieldElement = webDriver.findElement(By.id("p3-shieldCount"));
+        WebElement p4ShieldElement = webDriver.findElement(By.id("p4-shieldCount"));
+
+        // Start clicking simulation
+        resetButton.click();
+        Thread.sleep(1000);
+        fourthScenarioButton.click();
+        Thread.sleep(1000);
+        // assert game begins/initialized, etc.
+
+        yesButton.click();
+        Thread.sleep(1000);
+        // quest build: 0 1 4 2 4 5 Quit 0 0 1 0 0 0
+        cardPos0.click();
+        Thread.sleep(1000);
+        cardPos1.click();
+        Thread.sleep(1000);
+        cardPos4.click();
+        Thread.sleep(1000);
+        cardPos2.click();
+        Thread.sleep(1000);
+        cardPos4.click();
+        Thread.sleep(1000);
+        cardPos5.click();
+        Thread.sleep(1000);
+        quitButton.click();
+        Thread.sleep(1000);
+
+        cardPos0.click();
+        Thread.sleep(1000);
+        cardPos0.click();
+        Thread.sleep(1000);
+        cardPos1.click();
+        Thread.sleep(1000);
+        cardPos0.click();
+        Thread.sleep(1000);
+        cardPos0.click();
+        Thread.sleep(1000);
+        cardPos0.click();
+        Thread.sleep(1000);
+        quitButton.click();
+        Thread.sleep(1000);
+
+        // Stage 1
+        tackleButton.click();
+        Thread.sleep(1000);
+        cardPos0.click();
+        Thread.sleep(1000);
+        tackleButton.click();
+        Thread.sleep(1000);
+        cardPos3.click();
+        Thread.sleep(1000);
+        tackleButton.click();
+        Thread.sleep(1000);
+        cardPos2.click();
+        Thread.sleep(1000);
+
+        // attack
+        cardPos11.click();
+        Thread.sleep(1000);
+        quitButton.click();
+        Thread.sleep(1000);
+        quitButton.click();
+        Thread.sleep(1000);
+        quitButton.click();
+        Thread.sleep(1000);
+
+//        // Sponsor refresh hand
+        enterButton.click();
+        Thread.sleep(1000);
+        cardPos0.click();
+        Thread.sleep(1000);
+        cardPos0.click();
+        Thread.sleep(1000);
+
+        List<String> p1ExpectedFinalHand = new ArrayList<>();
+        p1ExpectedFinalHand.add("F15");
+        p1ExpectedFinalHand.add("D5");
+        p1ExpectedFinalHand.add("D5");
+        p1ExpectedFinalHand.add("D5");
+        p1ExpectedFinalHand.add("D5");
+        p1ExpectedFinalHand.add("S10");
+        p1ExpectedFinalHand.add("S10");
+        p1ExpectedFinalHand.add("S10");
+        p1ExpectedFinalHand.add("H10");
+        p1ExpectedFinalHand.add("H10");
+        p1ExpectedFinalHand.add("H10");
+        p1ExpectedFinalHand.add("H10");
+
+        List<String> p2ExpectedFinalHand = new ArrayList<>();
+        p2ExpectedFinalHand.add("F5");
+        p2ExpectedFinalHand.add("F5");
+        p2ExpectedFinalHand.add("F10");
+        p2ExpectedFinalHand.add("F15");
+        p2ExpectedFinalHand.add("F15");
+        p2ExpectedFinalHand.add("F20");
+        p2ExpectedFinalHand.add("F20");
+        p2ExpectedFinalHand.add("F25");
+        p2ExpectedFinalHand.add("F30");
+        p2ExpectedFinalHand.add("F30");
+        p2ExpectedFinalHand.add("F40");
+
+        List<String> p3ExpectedFinalHand = new ArrayList<>();
+        p3ExpectedFinalHand.add("F5");
+        p3ExpectedFinalHand.add("F5");
+        p3ExpectedFinalHand.add("F10");
+        p3ExpectedFinalHand.add("F15");
+        p3ExpectedFinalHand.add("F15");
+        p3ExpectedFinalHand.add("F20");
+        p3ExpectedFinalHand.add("F20");
+        p3ExpectedFinalHand.add("F25");
+        p3ExpectedFinalHand.add("F25");
+        p3ExpectedFinalHand.add("F30");
+        p3ExpectedFinalHand.add("F40");
+        p3ExpectedFinalHand.add("L20");
+
+        List<String> p4ExpectedFinalHand = new ArrayList<>();
+        p4ExpectedFinalHand.add("F5");
+        p4ExpectedFinalHand.add("F5");
+        p4ExpectedFinalHand.add("F10");
+        p4ExpectedFinalHand.add("F15");
+        p4ExpectedFinalHand.add("F15");
+        p4ExpectedFinalHand.add("F20");
+        p4ExpectedFinalHand.add("F20");
+        p4ExpectedFinalHand.add("F25");
+        p4ExpectedFinalHand.add("F25");
+        p4ExpectedFinalHand.add("F30");
+        p4ExpectedFinalHand.add("F50");
+        p4ExpectedFinalHand.add("E30");
+
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create("http://127.0.0.1:8080/game/player-hand")).GET().build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        ObjectMapper objectMapper = new ObjectMapper();
+        List<List<String>> playerHands = objectMapper.readValue(response.body(), List.class);
+
+        List<String> p1Hand = playerHands.get(0);
+        List<String> p2Hand = playerHands.get(1);
+        List<String> p3Hand = playerHands.get(2);
+        List<String> p4Hand = playerHands.get(3);
+
+        String p1ShieldCount = p1ShieldElement.getText().split(":")[1].split("\\|")[0].trim();
+        String p2ShieldCount = p2ShieldElement.getText().split(":")[1].split("\\|")[0].trim();
+        String p3ShieldCount = p3ShieldElement.getText().split(":")[1].split("\\|")[0].trim();
+        String p4ShieldCount = p4ShieldElement.getText().split(":")[1].split("\\|")[0].trim();
+
+        assertEquals(0, Integer.parseInt(p1ShieldCount));
+        assertEquals(0, Integer.parseInt(p2ShieldCount));
+        assertEquals(0, Integer.parseInt(p3ShieldCount));
+        assertEquals(0, Integer.parseInt(p4ShieldCount));
+
+        assertEquals(p1ExpectedFinalHand, p1Hand);
+        assertEquals(12, p1Hand.size());
+
+        assertEquals(p2ExpectedFinalHand, p2Hand);
+        assertEquals(11, p2Hand.size());
+
+        assertEquals(p3ExpectedFinalHand, p3Hand);
+        assertEquals(12, p3Hand.size());
+
+        assertEquals(p4ExpectedFinalHand, p4Hand);
+        assertEquals(12, p4Hand.size());
 
         Thread.sleep(20000); // wait 20s to review game
         webDriver.quit();
