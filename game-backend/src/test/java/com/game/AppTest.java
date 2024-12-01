@@ -744,7 +744,7 @@ public class AppTest{
         enterButton.click(); // check ??
         Thread.sleep(1000);
 
-        // Event cards
+        // Event cards| Plague drawn here
         // enter after plague?
 
         enterButton.click();

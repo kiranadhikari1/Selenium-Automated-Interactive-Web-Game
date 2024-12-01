@@ -122,6 +122,7 @@ async function fetchMessage() {
         updateGameMessages(message);
 
         fetchPlayerStats()
+        fetchPlayerHands();
 
         fetchMessage();
 
@@ -146,6 +147,22 @@ async function fetchPlayerStats() {
     }
 }
 
+async function fetchPlayerHands() {
+    try {
+        const response = await fetch('http://127.0.0.1:8080/game/player-hand');
+        if (!response.ok) {
+            console.error("failed fetching p hands ", response.statusText);
+            return;
+        }
+
+        const playersHands = await response.json();
+        updatePlayerHands(playersHands);
+
+    } catch (error) {
+        console.error("error getting hand ", error);
+    }
+}
+
 // Helper func for updating web message box
 function updateGameMessages(message) {
     console.log("Adding message to web ui:", message);
@@ -162,5 +179,14 @@ function updateShieldsAndCards(message){
         const [player, shieldCount, cardCount] = line.split("|").map(s => s.trim());
         const newStats = document.getElementById(`${player.toLowerCase()}-shieldCount`);
         newStats.textContent = `${player}: ${shieldCount} | ${cardCount}`;
+    });
+}
+
+function updatePlayerHands(hands) {
+    hands.forEach((hand, index) => {
+        const allPlayersHandData = document.getElementById(`p${index + 1}-hand`);
+        if (allPlayersHandData) {
+            allPlayersHandData.textContent = `P${index + 1}: ${hand.join(", ")}`;
+        }
     });
 }
