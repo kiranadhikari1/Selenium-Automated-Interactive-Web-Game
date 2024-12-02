@@ -130,5 +130,10 @@ public class GameController {
         }
         return playerHands;
     }
+
+    @GetMapping("/winners")
+    public String getWinners() {
+        return gameService.displayWinners();
+    }
 }
 

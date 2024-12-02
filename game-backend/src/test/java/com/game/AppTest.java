@@ -56,6 +56,8 @@ public class AppTest{
         WebElement p3HandElement = webDriver.findElement(By.id("p3-hand"));
         WebElement p4HandElement = webDriver.findElement(By.id("p4-hand"));
 
+        WebElement winnersListElement = webDriver.findElement(By.id("winners"));
+
         // Start clicking simulation
         resetButton.click();
         Thread.sleep(1000);
@@ -239,6 +241,8 @@ public class AppTest{
         List<String> p3Hand = Arrays.asList(p3HandElement.getText().replace("P3: ", "").trim().split(", "));
         List<String> p4Hand = Arrays.asList(p4HandElement.getText().replace("P4: ", "").trim().split(", "));
 
+        String winnersList = winnersListElement.getText();
+
         assertEquals(p1ExpectedFinalHand, p1Hand);
         assertEquals(9, p1Hand.size());
 
@@ -250,7 +254,10 @@ public class AppTest{
         assertEquals(p4ExpectedFinalHand, p4Hand);
         assertEquals(4, p4Hand.size());
 
-        Thread.sleep(20000); // wait 20s to review game
+        assertFalse(winnersList.contains("P1") || winnersList.contains("P2") || winnersList.contains("P3") || winnersList.contains("P4"));
+        assertTrue(winnersList.contains("No winners yet !"));
+
+        Thread.sleep(10000); // wait 20s to review game
         webDriver.quit();
     }
 
@@ -293,6 +300,8 @@ public class AppTest{
         WebElement p2HandElement = webDriver.findElement(By.id("p2-hand"));
         WebElement p3HandElement = webDriver.findElement(By.id("p3-hand"));
         WebElement p4HandElement = webDriver.findElement(By.id("p4-hand"));
+
+        WebElement winnersListElement = webDriver.findElement(By.id("winners"));
 
         // Start clicking simulation
         resetButton.click();
@@ -400,7 +409,7 @@ public class AppTest{
         cardPos5.click();
         Thread.sleep(1000);
         quitButton.click();
-        Thread.sleep(30000);
+        Thread.sleep(5000);
 
         // p1 refreshes hand and dsicards some cards
         cardPos0.click();
@@ -554,6 +563,8 @@ public class AppTest{
         List<String> p3Hand = Arrays.asList(p3HandElement.getText().replace("P3: ", "").trim().split(", "));
         List<String> p4Hand = Arrays.asList(p4HandElement.getText().replace("P4: ", "").trim().split(", "));
 
+        String winnersList = winnersListElement.getText();
+
         assertEquals(p1ExpectedFinalHand, p1Hand);
         assertEquals(12, p1Hand.size());
 
@@ -565,6 +576,9 @@ public class AppTest{
 
         assertEquals(p4ExpectedFinalHand, p4Hand);
         assertEquals(9, p4Hand.size());
+
+        assertTrue(winnersList.contains("P2") && winnersList.contains("P4"));
+        assertFalse(winnersList.contains("No winners yet !"));
 
         Thread.sleep(20000); // wait 20s to review game
         webDriver.quit();
@@ -609,6 +623,8 @@ public class AppTest{
         WebElement p2HandElement = webDriver.findElement(By.id("p2-hand"));
         WebElement p3HandElement = webDriver.findElement(By.id("p3-hand"));
         WebElement p4HandElement = webDriver.findElement(By.id("p4-hand"));
+
+        WebElement winnersListElement = webDriver.findElement(By.id("winners"));
 
         // Start clicking simulation
         resetButton.click();
@@ -926,6 +942,8 @@ public class AppTest{
         List<String> p3Hand = Arrays.asList(p3HandElement.getText().replace("P3: ", "").trim().split(", "));
         List<String> p4Hand = Arrays.asList(p4HandElement.getText().replace("P4: ", "").trim().split(", "));
 
+        String winnersList = winnersListElement.getText();
+
         assertEquals(0, Integer.parseInt(p1ShieldCount));
         assertEquals(5, Integer.parseInt(p2ShieldCount));
         assertEquals(7, Integer.parseInt(p3ShieldCount));
@@ -943,7 +961,10 @@ public class AppTest{
         assertEquals(p4ExpectedFinalHand, p4Hand);
         assertEquals(11, p4Hand.size());
 
-        Thread.sleep(20000); // wait 20s to review game
+        assertTrue(winnersList.contains("P3"));
+        assertFalse(winnersList.contains("No winners yet !"));
+
+        Thread.sleep(10000); // wait 20s to review game
         webDriver.quit();
     }
 
@@ -986,6 +1007,8 @@ public class AppTest{
         WebElement p2HandElement = webDriver.findElement(By.id("p2-hand"));
         WebElement p3HandElement = webDriver.findElement(By.id("p3-hand"));
         WebElement p4HandElement = webDriver.findElement(By.id("p4-hand"));
+
+        WebElement winnersListElement = webDriver.findElement(By.id("winners"));
 
         // Start clicking simulation
         resetButton.click();
@@ -1124,6 +1147,8 @@ public class AppTest{
         List<String> p3Hand = Arrays.asList(p3HandElement.getText().replace("P3: ", "").trim().split(", "));
         List<String> p4Hand = Arrays.asList(p4HandElement.getText().replace("P4: ", "").trim().split(", "));
 
+        String winnersList = winnersListElement.getText();
+
         assertEquals(0, Integer.parseInt(p1ShieldCount));
         assertEquals(0, Integer.parseInt(p2ShieldCount));
         assertEquals(0, Integer.parseInt(p3ShieldCount));
@@ -1141,7 +1166,10 @@ public class AppTest{
         assertEquals(p4ExpectedFinalHand, p4Hand);
         assertEquals(12, p4Hand.size());
 
-        Thread.sleep(20000); // wait 20s to review game
+        assertFalse(winnersList.contains("P1") || winnersList.contains("P2") || winnersList.contains("P3") || winnersList.contains("P4"));
+        assertTrue(winnersList.contains("No winners yet !"));
+
+        Thread.sleep(10000); // wait 20s to review game
         webDriver.quit();
     }
 }

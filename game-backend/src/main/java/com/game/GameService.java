@@ -68,6 +68,9 @@ public class GameService {
                         endQuest(drawnEventCard, player);
                     }
                 }
+                String winnersText = displayWinners();
+                logMessage(winnersText);
+
                 discardEventCard(drawnEventCard);
                 endTurnAndClearDisplay(player);
             }
@@ -135,7 +138,7 @@ public class GameService {
         List<Player> winnerList = checkForWinners();
         StringBuilder winners = new StringBuilder();
         if (winnerList.isEmpty()){
-            return "No winners yet.";
+            return "No winners yet !";
         }
         else{
             for (int i=0; i<winnerList.size(); i++){

@@ -123,6 +123,7 @@ async function fetchMessage() {
 
         fetchPlayerStats()
         fetchPlayerHands();
+        fetchWinners();
 
         fetchMessage();
 
@@ -161,6 +162,27 @@ async function fetchPlayerHands() {
     } catch (error) {
         console.error("error getting hand ", error);
     }
+}
+
+async function fetchWinners() {
+    try {
+        const response = await fetch('http://127.0.0.1:8080/game/winners');
+        if (!response.ok) {
+            console.error("failed fetching winners list ", response.statusText);
+            return;
+        }
+
+        const winnersList = await response.text();
+        updateWinners(winnersList);
+
+    } catch (error) {
+        console.error("error getting hand ", error);
+    }
+}
+
+function updateWinners(winners){
+    const winnersDisplay = document.getElementById("winners");
+    winnersDisplay.textContent = winners;
 }
 
 // Helper func for updating web message box
