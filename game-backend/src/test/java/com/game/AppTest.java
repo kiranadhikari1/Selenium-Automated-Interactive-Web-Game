@@ -1,6 +1,5 @@
 package com.game;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
@@ -9,11 +8,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -54,6 +50,11 @@ public class AppTest{
         WebElement p2ShieldElement = webDriver.findElement(By.id("p2-shieldCount"));
         WebElement p3ShieldElement = webDriver.findElement(By.id("p3-shieldCount"));
         WebElement p4ShieldElement = webDriver.findElement(By.id("p4-shieldCount"));
+
+        WebElement p1HandElement = webDriver.findElement(By.id("p1-hand"));
+        WebElement p2HandElement = webDriver.findElement(By.id("p2-hand"));
+        WebElement p3HandElement = webDriver.findElement(By.id("p3-hand"));
+        WebElement p4HandElement = webDriver.findElement(By.id("p4-hand"));
 
         // Start clicking simulation
         resetButton.click();
@@ -223,18 +224,6 @@ public class AppTest{
         p4ExpectedFinalHand.add("F40");
         p4ExpectedFinalHand.add("L20");
 
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder().uri(URI.create("http://127.0.0.1:8080/game/player-hand")).GET().build();
-
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        ObjectMapper objectMapper = new ObjectMapper();
-        List<List<String>> playerHands = objectMapper.readValue(response.body(), List.class);
-
-        List<String> p1Hand = playerHands.get(0);
-        List<String> p2Hand = playerHands.get(1);
-        List<String> p3Hand = playerHands.get(2);
-        List<String> p4Hand = playerHands.get(3);
-
         String p1ShieldCount = p1ShieldElement.getText().split(":")[1].split("\\|")[0].trim();
         String p2ShieldCount = p2ShieldElement.getText().split(":")[1].split("\\|")[0].trim();
         String p3ShieldCount = p3ShieldElement.getText().split(":")[1].split("\\|")[0].trim();
@@ -244,6 +233,11 @@ public class AppTest{
         assertEquals(0, Integer.parseInt(p2ShieldCount));
         assertEquals(0, Integer.parseInt(p3ShieldCount));
         assertEquals(4, Integer.parseInt(p4ShieldCount));
+
+        List<String> p1Hand = Arrays.asList(p1HandElement.getText().replace("P1: ", "").trim().split(", "));
+        List<String> p2Hand = Arrays.asList(p2HandElement.getText().replace("P2: ", "").trim().split(", "));
+        List<String> p3Hand = Arrays.asList(p3HandElement.getText().replace("P3: ", "").trim().split(", "));
+        List<String> p4Hand = Arrays.asList(p4HandElement.getText().replace("P4: ", "").trim().split(", "));
 
         assertEquals(p1ExpectedFinalHand, p1Hand);
         assertEquals(9, p1Hand.size());
@@ -294,6 +288,11 @@ public class AppTest{
         WebElement p2ShieldElement = webDriver.findElement(By.id("p2-shieldCount"));
         WebElement p3ShieldElement = webDriver.findElement(By.id("p3-shieldCount"));
         WebElement p4ShieldElement = webDriver.findElement(By.id("p4-shieldCount"));
+
+        WebElement p1HandElement = webDriver.findElement(By.id("p1-hand"));
+        WebElement p2HandElement = webDriver.findElement(By.id("p2-hand"));
+        WebElement p3HandElement = webDriver.findElement(By.id("p3-hand"));
+        WebElement p4HandElement = webDriver.findElement(By.id("p4-hand"));
 
         // Start clicking simulation
         resetButton.click();
@@ -540,18 +539,6 @@ public class AppTest{
         p4ExpectedFinalHand.add("L20");
         p4ExpectedFinalHand.add("L20");
 
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder().uri(URI.create("http://127.0.0.1:8080/game/player-hand")).GET().build();
-
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        ObjectMapper objectMapper = new ObjectMapper();
-        List<List<String>> playerHands = objectMapper.readValue(response.body(), List.class);
-
-        List<String> p1Hand = playerHands.get(0);
-        List<String> p2Hand = playerHands.get(1);
-        List<String> p3Hand = playerHands.get(2);
-        List<String> p4Hand = playerHands.get(3);
-
         String p1ShieldCount = p1ShieldElement.getText().split(":")[1].split("\\|")[0].trim();
         String p2ShieldCount = p2ShieldElement.getText().split(":")[1].split("\\|")[0].trim();
         String p3ShieldCount = p3ShieldElement.getText().split(":")[1].split("\\|")[0].trim();
@@ -561,6 +548,11 @@ public class AppTest{
         assertEquals(7, Integer.parseInt(p2ShieldCount));
         assertEquals(0, Integer.parseInt(p3ShieldCount));
         assertEquals(7, Integer.parseInt(p4ShieldCount));
+
+        List<String> p1Hand = Arrays.asList(p1HandElement.getText().replace("P1: ", "").trim().split(", "));
+        List<String> p2Hand = Arrays.asList(p2HandElement.getText().replace("P2: ", "").trim().split(", "));
+        List<String> p3Hand = Arrays.asList(p3HandElement.getText().replace("P3: ", "").trim().split(", "));
+        List<String> p4Hand = Arrays.asList(p4HandElement.getText().replace("P4: ", "").trim().split(", "));
 
         assertEquals(p1ExpectedFinalHand, p1Hand);
         assertEquals(12, p1Hand.size());
@@ -612,6 +604,11 @@ public class AppTest{
         WebElement p2ShieldElement = webDriver.findElement(By.id("p2-shieldCount"));
         WebElement p3ShieldElement = webDriver.findElement(By.id("p3-shieldCount"));
         WebElement p4ShieldElement = webDriver.findElement(By.id("p4-shieldCount"));
+
+        WebElement p1HandElement = webDriver.findElement(By.id("p1-hand"));
+        WebElement p2HandElement = webDriver.findElement(By.id("p2-hand"));
+        WebElement p3HandElement = webDriver.findElement(By.id("p3-hand"));
+        WebElement p4HandElement = webDriver.findElement(By.id("p4-hand"));
 
         // Start clicking simulation
         resetButton.click();
@@ -919,22 +916,15 @@ public class AppTest{
         p4ExpectedFinalHand.add("B15");
         p4ExpectedFinalHand.add("L20");
 
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder().uri(URI.create("http://127.0.0.1:8080/game/player-hand")).GET().build();
-
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        ObjectMapper objectMapper = new ObjectMapper();
-        List<List<String>> playerHands = objectMapper.readValue(response.body(), List.class);
-
-        List<String> p1Hand = playerHands.get(0);
-        List<String> p2Hand = playerHands.get(1);
-        List<String> p3Hand = playerHands.get(2);
-        List<String> p4Hand = playerHands.get(3);
-
         String p1ShieldCount = p1ShieldElement.getText().split(":")[1].split("\\|")[0].trim();
         String p2ShieldCount = p2ShieldElement.getText().split(":")[1].split("\\|")[0].trim();
         String p3ShieldCount = p3ShieldElement.getText().split(":")[1].split("\\|")[0].trim();
         String p4ShieldCount = p4ShieldElement.getText().split(":")[1].split("\\|")[0].trim();
+
+        List<String> p1Hand = Arrays.asList(p1HandElement.getText().replace("P1: ", "").trim().split(", "));
+        List<String> p2Hand = Arrays.asList(p2HandElement.getText().replace("P2: ", "").trim().split(", "));
+        List<String> p3Hand = Arrays.asList(p3HandElement.getText().replace("P3: ", "").trim().split(", "));
+        List<String> p4Hand = Arrays.asList(p4HandElement.getText().replace("P4: ", "").trim().split(", "));
 
         assertEquals(0, Integer.parseInt(p1ShieldCount));
         assertEquals(5, Integer.parseInt(p2ShieldCount));
@@ -991,6 +981,11 @@ public class AppTest{
         WebElement p2ShieldElement = webDriver.findElement(By.id("p2-shieldCount"));
         WebElement p3ShieldElement = webDriver.findElement(By.id("p3-shieldCount"));
         WebElement p4ShieldElement = webDriver.findElement(By.id("p4-shieldCount"));
+
+        WebElement p1HandElement = webDriver.findElement(By.id("p1-hand"));
+        WebElement p2HandElement = webDriver.findElement(By.id("p2-hand"));
+        WebElement p3HandElement = webDriver.findElement(By.id("p3-hand"));
+        WebElement p4HandElement = webDriver.findElement(By.id("p4-hand"));
 
         // Start clicking simulation
         resetButton.click();
@@ -1056,7 +1051,7 @@ public class AppTest{
         quitButton.click();
         Thread.sleep(1000);
 
-//        // Sponsor refresh hand
+        // Sponsor refresh hand
         enterButton.click();
         Thread.sleep(1000);
         cardPos0.click();
@@ -1119,22 +1114,15 @@ public class AppTest{
         p4ExpectedFinalHand.add("F50");
         p4ExpectedFinalHand.add("E30");
 
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder().uri(URI.create("http://127.0.0.1:8080/game/player-hand")).GET().build();
-
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        ObjectMapper objectMapper = new ObjectMapper();
-        List<List<String>> playerHands = objectMapper.readValue(response.body(), List.class);
-
-        List<String> p1Hand = playerHands.get(0);
-        List<String> p2Hand = playerHands.get(1);
-        List<String> p3Hand = playerHands.get(2);
-        List<String> p4Hand = playerHands.get(3);
-
         String p1ShieldCount = p1ShieldElement.getText().split(":")[1].split("\\|")[0].trim();
         String p2ShieldCount = p2ShieldElement.getText().split(":")[1].split("\\|")[0].trim();
         String p3ShieldCount = p3ShieldElement.getText().split(":")[1].split("\\|")[0].trim();
         String p4ShieldCount = p4ShieldElement.getText().split(":")[1].split("\\|")[0].trim();
+
+        List<String> p1Hand = Arrays.asList(p1HandElement.getText().replace("P1: ", "").trim().split(", "));
+        List<String> p2Hand = Arrays.asList(p2HandElement.getText().replace("P2: ", "").trim().split(", "));
+        List<String> p3Hand = Arrays.asList(p3HandElement.getText().replace("P3: ", "").trim().split(", "));
+        List<String> p4Hand = Arrays.asList(p4HandElement.getText().replace("P4: ", "").trim().split(", "));
 
         assertEquals(0, Integer.parseInt(p1ShieldCount));
         assertEquals(0, Integer.parseInt(p2ShieldCount));
