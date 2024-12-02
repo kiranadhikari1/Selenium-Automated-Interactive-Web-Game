@@ -50,7 +50,6 @@ public class GameService {
                 System.out.println("Processing turn for: " + player.getPlayerID()); // Debugging
                 logMessage(player.getPlayerID() + "'s turn.");
                 String drawnEventCard = deck.drawEventCard();
-//                System.out.println("Event Card Drawn: " + drawnEventCard);
                 logMessage("Event Card Drawn: " + drawnEventCard);
                 if (drawnEventCard.equals("Plague")) {
                     plagueCardDrawn(player);
@@ -167,7 +166,6 @@ public class GameService {
     }
 
     public void displayPlayerHand(Player player){
-//        System.out.printf("\n" + player.getPlayerID() + ": ");
         logMessage("\n" + player.getPlayerID() + ": ");
         sortHand(player);
     }
@@ -239,9 +237,7 @@ public class GameService {
     public void promptPositionForCardRemoval(Player player, int discardCount){
         displayPlayerHand(player);
         for (int i=0; i<discardCount; i++){
-//            System.out.print("\nEnter position of the next card to delete: ");
             logMessage("\nEnter position of the next card to delete: ");
-//            String position = scanner.nextLine();
             String position = waitForPlayerInput();
             deleteCardFromHand(player, Integer.parseInt(position));
         }
@@ -283,18 +279,13 @@ public class GameService {
     }
 
     public void endTurnAndClearDisplay(Player currentPlayer){
-//        System.out.println("\n" + currentPlayer.getPlayerID() + "'s turn has ended, please press the <return> key to end your turn.\n");
         logMessage("\n" + currentPlayer.getPlayerID() + "'s turn has ended, please press the <return> key to end your turn.\n");
-//        scanner.nextLine();
         waitForPlayerInput();
-//        System.out.println("Clearing display for the next player's turn...");
         logMessage("Clearing display for the next player's turn...");
-//        System.out.println("\n\n\n\n\n\n\n\n\n\n");
         logMessage("\n\n\n\n\n\n\n\n\n\n");
     }
 
     public void displayNextPlayerTurn(Player player){
-//        System.out.println("It is now " + player.getPlayerID() + "'s turn.");
         logMessage("It is now " + player.getPlayerID() + "'s turn.");
         displayPlayerHand(player);
     }
@@ -304,7 +295,7 @@ public class GameService {
         String playerResponse = waitForPlayerInput();
 
         if (playerResponse.equals("y")) {
-            logMessage(currentPlayer.getPlayerID() + " is sponsoring this quest YAAAA!\n");
+            logMessage(currentPlayer.getPlayerID() + " is sponsoring this quest!\n");
             return currentPlayer; // Return current player if they sponsor
         } else {
             logMessage(currentPlayer.getPlayerID() + " has declined to sponsor this quest.\n");
@@ -338,9 +329,7 @@ public class GameService {
 
     public String promptSponsorForCardToInclude(Player sponsor){
         displayPlayerHand(sponsor);
-//        System.out.println("\nPlease enter the position of the next card to include in this stage or typw 'Quit' to end building this stage.\n");
         logMessage("\nPlease enter the position of the next card to include in this stage or typw 'Quit' to end building this stage.\n");
-//        return scanner.nextLine();
         return waitForPlayerInput();
     }
 
@@ -370,7 +359,6 @@ public class GameService {
         if (selectedCard.startsWith("F")){
             for (String card : currentStageCards){
                 if (card.startsWith("F")){
-//                    System.out.println("\nMust select a sole foe card!\n");
                     logMessage("\nMust select a sole foe card!\n");
                     return false;
                 }
@@ -398,12 +386,9 @@ public class GameService {
             }
 
             if (!isLargerStageValue(previousStageCards, currentStageCards)){
-//                System.out.println("\nThis stage value needs to be greater than the previous stage.\n");
                 logMessage("\nThis stage value needs to be greater than the previous stage.\n");
                 return false;
             }
-
-//            System.out.println("\nStage is valid and has been created.\n");
             logMessage("\nStage is valid and has been created.\n");
             return true;
         }
@@ -436,7 +421,6 @@ public class GameService {
                 isValid = true;
             }
             else{
-//                System.out.println("\nInvalid card, please select a valid one for this stage.\n");
                 logMessage("\nInvalid card, please select a valid one for this stage.\n");
             }
         }
@@ -447,9 +431,7 @@ public class GameService {
     // This method displays the players hand and prompts the player for the position of the next attack card to use for the current stage or quit.
     public String promptPlayerForAttackCard(Player player){
         displayPlayerHand(player);
-//        System.out.println("\nPlease enter the position of the next card to include in this attack or 'Quit' to end building this attack.\n");
         logMessage("\nPlease enter the position of the next card to include in this attack or 'Quit' to end building this attack.\n");
-//        return scanner.nextLine();
         return waitForPlayerInput();
     }
 
@@ -465,7 +447,6 @@ public class GameService {
             return true;
         }
         if (selectedCard.startsWith("F")){
-//            System.out.println("\nCannot add a foe card. Please select a valid weapon card!\n");
             logMessage("\nCannot add a foe card. Please select a valid weapon card!\n");
             return false;
         }
@@ -491,12 +472,10 @@ public class GameService {
     public boolean handleQuitEnteredForAttack(String cardPosition, List<String> currentAttackCards){
         if (cardPosition.equals("Quit")){
             if (isEmptyAttack(currentAttackCards)){
-//                System.out.println("\nAttack is empty but valid!\n");
                 logMessage("\nAttack is empty but valid!\n");
                 return true;
             }
 
-//            System.out.println("\nAdded selected card to list of cards for attack.\n");
             logMessage("\nAdded selected card to list of cards for attack.\n");
             return isValidAttackCard(cardPosition, currentAttackCards);
         }
@@ -525,7 +504,6 @@ public class GameService {
                 isValid = true;
             }
             else{
-//                System.out.println("\nInvalid card, please select a valid one for this stage.\n");
                 logMessage("\nInvalid card, please select a valid one for this stage.\n");
             }
         }
@@ -541,7 +519,6 @@ public class GameService {
                 eligibleParticipants.add(player);
             }
         }
-//        System.out.print("Eligible Players: ");
         logMessage("Eligible Players: ");
         for (Player player : eligibleParticipants){
             System.out.print(player.getPlayerID() + " ");
@@ -560,16 +537,13 @@ public class GameService {
     // prompt player if they want to withdraw or tackle the current stage.
     public void promptPlayerForCurrentStageDecision(List<Player> eligiblePlayers){
         for (Player player : eligiblePlayers){
-//            System.out.println(player.getPlayerID() + ", would you like to withdraw from the quest or tackle the current stage of the quest?");
             logMessage(player.getPlayerID() + ", would you like to withdraw from the quest or tackle the current stage of the quest?");
-//            String playerResponse = scanner.nextLine();
             String playerResponse = waitForPlayerInput();
 
             if (playerResponse.equals("withdraw")){
                 logMessage(player.getPlayerID() + " has withdrawn from this quest.");
                 player.setEligibility(false);
             } else if (playerResponse.equals("tackle")) {
-//                System.out.println(player.getPlayerID() + " remains in this quest and will tackle this stage!");
                 logMessage(player.getPlayerID() + " remains in this quest and will tackle this stage!");
                 drawAndTrimHand(player);
             }
@@ -584,7 +558,6 @@ public class GameService {
         }
 
         System.out.println(player.getPlayerID() + ", would you like to withdraw from the quest or tackle the current stage of the quest?");
-//        String playerResponse = scanner.nextLine();
         String playerResponse = waitForPlayerInput();
 
         if (playerResponse.equals("withdraw")){
@@ -608,14 +581,11 @@ public class GameService {
         int totalAttackValue = determineStageValue(currentAttackCards);
         if (totalAttackValue < currentStageValue){
             player.setEligibility(false);
-//            System.out.println(player.getPlayerID() + " has lost and is not eligible for the remainder of the quest.\n");
             logMessage(player.getPlayerID() + " has lost and is not eligible for the remainder of the quest.\n");
         } else {
-//            System.out.println(player.getPlayerID() + " has beat this stage and is eligible for the next one.\n");
             logMessage(player.getPlayerID() + " has beat this stage and is eligible for the next one.\n");
             if (isFinalStage(currentStage, totalStages)){
                 player.addShield(totalStages);
-//                System.out.println(player.getPlayerID() + " has won and has been awarded ("+ totalStages + ") shields!\n");
                 logMessage(player.getPlayerID() + " has won and has been awarded ("+ totalStages + ") shields!\n");
             } else {
                 player.setEligibility(true);
@@ -641,12 +611,9 @@ public class GameService {
                 player.getHand().remove(card);
                 deck.getAdventureDeckDiscardPile().add(card);
             }
-//            System.out.println("\nThe cards used for this attack have been discarded.\n");
             logMessage("\nThe cards used for this attack have been discarded.\n");
         }
     }
-
-    // P1 Starts: F5 F5 F10 F10 F15 D5 H10 H10 B15 B15 L20     After quest 1 ends: P1:F5 F10 F15 F15 F15 F15 F20 F20 F20 F20 F25 F25 F30 L20
 
     // UC-04-5
     // This method draws new cards for sponsor and trims hand after the quest has finished.
@@ -666,14 +633,10 @@ public class GameService {
         List<String> stagedCardsCopy = new ArrayList<>(this.totalStagedCards);
         System.out.println("sponsor hand before discardSponsorStagedCards removes stagedCardsCopy\n");
         displayPlayerHand(sponsor);
-//        for (String card : stagedCardsCopy) {
-//            sponsor.getHand().remove(card);
-//            System.out.println("Removing card: " + card + " from " + sponsor.getPlayerID());
-//
-//            deck.getAdventureDeckDiscardPile().add(card);
-//        }
+
         System.out.println("\nAll cards that were used to build this quest have been discarded.\n");
         logMessage("\nAll cards that were used to build this quest have been discarded.\n");
+
         int totalCardsToDraw = this.totalStagedCards.size() + totalStages;
         refreshSponsorHand(sponsor, totalCardsToDraw);
         this.allQuestCards.clear();
@@ -695,7 +658,6 @@ public class GameService {
             int cardPosition = handleRepromptAndReturnValidAttackCardForCurrentAttack(player, currentAttackCards);
 
             if (cardPosition == -1) { // quit entered
-//                System.out.println("\nAttack for this stage has been set up.\n");
                 logMessage("\nAttack for this stage has been set up.\n");
                 break;
             } else {
@@ -721,7 +683,6 @@ public class GameService {
         List<String> previousStageCards = new ArrayList<>();
 
         for (int i = 1; i <= totalStages; i++) {
-//            System.out.println("\nSetting up Stage " + i + " of " + totalStages);
             logMessage("\nSetting up Stage " + i + " of " + totalStages);
             List<String> currentStageCards = new ArrayList<>();
 
@@ -730,7 +691,7 @@ public class GameService {
                 if (cardPosition == -1) { // catch 'Quit' entered which is return of -1 during any of the setup stages
                     this.allQuestCards.add(new ArrayList<>(currentStageCards));
                     previousStageCards = new ArrayList<>(currentStageCards); // assign to a copy of curr stage cards to keep track of prev cards once we get to next stage
-//                    System.out.println("Stage " + i + " is ready.\n");
+
                     logMessage("Stage " + i + " is ready.\n");
                     break; // continue to next stage
                 }
@@ -743,7 +704,6 @@ public class GameService {
                 }
             }
         }
-//        System.out.println("\nQuest has been set up and is ready to be played out.\n");
         logMessage("\nQuest has been set up and is ready to be played out.\n");
 
         // Store the quest cards per stage for quest resolution
@@ -762,14 +722,12 @@ public class GameService {
         eligibleParticipants.remove(sponsor); // rmeove sponsor as they wont be participating
 
         for (int i = 1; i <= totalStages; i++) {
-//            System.out.println("Stage: " + i);
             logMessage("Stage: " + i);
             promptPlayerForCurrentStageDecision(eligibleParticipants);
             eligibleParticipants.removeIf(player -> !player.getStageEligibility()); // filter out ineligible participants
 
             // Check if any players are left
             if (noParticipantsLeft(eligibleParticipants)) {
-//                System.out.println("No more eligible participants.");
                 logMessage("No more eligible participants.");
                 endQuest(qCard, sponsor); // end quest, discard event card and end player turn
                 discardSponsorStagedCards(sponsor, totalStages);
@@ -779,26 +737,22 @@ public class GameService {
             // Setup attack for the stage
             this.eligiblePlayersAttackCards.clear();
             for (Player player : eligibleParticipants) {
-//                System.out.println("\n" + player.getPlayerID() + " is setting up their attack against this stage!");
                 logMessage("\n" + player.getPlayerID() + " is setting up their attack against this stage!");
                 List<String> attackCards = setUpPlayerAttack(player);
                 eligiblePlayersAttackCards.put(player, attackCards);
             }
             for (Map.Entry<Player, List<String>> entry : eligiblePlayersAttackCards.entrySet()) {
-//                System.out.println(entry.getKey().getPlayerID() + "'s Attack Cards: " + entry.getValue());
                 logMessage(entry.getKey().getPlayerID() + "'s Attack Cards: " + entry.getValue());
             }
 
             List<String> currentStageCards = allQuestCards.get(i - 1); //  (i stage - 1) for the index position to retrieve cards.
             int currentStageValue = determineStageValue(currentStageCards);
-//            System.out.println("Current Stage Value: " + currentStageValue + "\n");
             logMessage("Current Stage Value: " + currentStageValue + "\n");
 
             resolveAllPlayersAttack(totalStages, eligiblePlayersAttackCards, currentStageValue, i);
 
             // Check again after resolveeAttack if any players are still left
             if (noParticipantsLeft(eligibleParticipants)) {
-//                System.out.println("No more eligible participants.");
                 logMessage("No more eligible participants.");
                 endQuest(qCard, sponsor); // end quest, discard event card and end player turn
                 discardSponsorStagedCards(sponsor, totalStages);
@@ -811,7 +765,6 @@ public class GameService {
     // Extracted from larger handleQuest method
     public void resolveAllPlayersAttack(int totalStages, Map<Player, List<String>> eligiblePlayersAttackCards, int currentStageValue, int currentStage) {
         // handle quest resolution (attack vs each stage value)
-//        System.out.println("Resolving stage " + currentStage + " with total value: " + currentStageValue);
         logMessage("Resolving stage " + currentStage + " with total value: " + currentStageValue);
 
         for (Map.Entry<Player, List<String>> entry : eligiblePlayersAttackCards.entrySet()) {

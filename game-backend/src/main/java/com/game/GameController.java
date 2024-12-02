@@ -22,11 +22,8 @@ public class GameController {
         gameService.shuffleDecks();
         gameService.distributeCardsToPlayer();
 
-//        gameService.getDeck().getEventDeck().add("Q2");
-
-        System.out.println("Game start test"); // remove later
         new Thread(() -> {
-            System.out.println("Game thread created test"); // remove later
+            System.out.println("Game thread created test");
             gameService.playGame();
         }).start();
     }
@@ -54,7 +51,6 @@ public class GameController {
 
         gameService.initializeFirstScenario();
 
-        System.out.println("Game start test"); // remove later
         new Thread(() -> {
             System.out.println("First scenario initialized. Starting hands and deck have been rigged. Q2 at top"); // remove later
             gameService.playGame();
@@ -136,4 +132,3 @@ public class GameController {
         return gameService.displayWinners();
     }
 }
-
